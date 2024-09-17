@@ -47,7 +47,7 @@ do {
                 alert(`Gracias por tu compra!\n\nSu compra:\n${productosComprados}\n\nTotal de la compra: $${total}`);
             }else{
                 opcion = null;
-            } 
+            }
             break;
         default:
             alert(error);
@@ -56,3 +56,4 @@ do {
 
 }while (opcion !== '9');
 
+console.log(carrito, total)
