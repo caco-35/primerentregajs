@@ -2,7 +2,27 @@ let total = 0;
 let opcion;
 let carrito = [];
 const error = 'Ingrese una opcion valida.'
-let productos = [
+
+class Productos {
+    constructor(id, nombre, precio){
+        this.id = id;
+        this.nombre = nombre;
+        this.precio = precio;
+    }
+}
+
+let producto1 = new Productos(1, 'Remera', 550);
+let producto2 = new Productos(2, 'Short', 600);
+let producto3 = new Productos(3, 'Vaquero', 1100);
+let producto4 = new Productos(4, 'Camisa', 650);
+let producto5 = new Productos(5, 'Musculosa', 450);
+let producto6 = new Productos(6, 'Maya', 550);
+let producto7 = new Productos(7, 'Gorra', 200);
+let producto8 = new Productos(8, 'Protector solar', 400);
+
+let productos = [producto1, producto2, producto3, producto4, producto5, producto6, producto7, producto8]
+
+/*let productos = [
     { id: 1, nombre: "Remera", precio: 550 },
     { id: 2, nombre: "Short", precio: 600 },
     { id: 3, nombre: "Vaquero", precio: 1100 },
@@ -11,7 +31,7 @@ let productos = [
     { id: 6, nombre: "Maya", precio: 550 },
     { id: 7, nombre: "Gorra", precio: 200 },
     { id: 8, nombre: "Protector solar", precio: 400 }
-];
+];*/
 
 const listarProductos = () => {
     let lista = 'Seleccione el producto: \n\n';
