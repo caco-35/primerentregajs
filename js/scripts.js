@@ -45,11 +45,26 @@ const listarProductos = () => {
 const finalizarCompra = () => {
     let salir = confirm('Quiere finalizar su compra?')
             if (salir){
-                let productosComprados = carrito.map(item => `${item.nombre} - $${item.precio}`).join('\n');
+                let productosComprados = carrito.map(item => `Cant.: ${item.cantidad} - ${item.nombre} - $${item.precio}`).join('\n');
                 alert(`Gracias por tu compra!\n\nSu compra:\n${productosComprados}\n\nTotal de la compra: $${total}`);
             }else{
                 opcion = null;
             }
+}
+
+const agregarCarrito = () => {
+    let indice = parseInt(opcion) - 1;
+    let producto = productos[indice];
+    let estaCarrito = carrito.find((e) => e.id == producto.id);
+
+    if(estaCarrito) {
+        estaCarrito.cantidad += 1;
+        estaCarrito.precio += producto.precio;
+    }else{
+        carrito.push({ id: productos[indice].id, nombre: productos[indice].nombre, precio: productos[indice].precio, cantidad: 1});
+    }
+    total += productos[indice].precio;
+    alert(`Has añadido ${productos[indice].nombre}.\n\nTotal: $${total}`);
 }
 
 const selectProductos = () => {
@@ -57,15 +72,12 @@ const selectProductos = () => {
         case '1':
         case '2':
         case '3':
-        case '4':
+        case '4': 
         case '5':
         case '6':
         case '7':
         case '8':
-            let indice = parseInt(opcion) - 1;
-            carrito.push({ id: productos[indice].id, nombre: productos[indice].nombre, precio: productos[indice].precio });
-            total += productos[indice].precio;
-            alert(`Has añadido ${productos[indice].nombre}.\n\nTotal: $${total}`);
+            agregarCarrito();
             break;
         case '9':
             finalizarCompra();
