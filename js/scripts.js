@@ -1,26 +1,26 @@
 let total = 0;
-let opcion;
-let carrito = [];
+let option;
+let car = [];
 const error = 'Ingrese una opcion valida.'
 
-class Productos {
-    constructor(id, nombre, precio){
+class Products {
+    constructor(id, name, price){
         this.id = id;
-        this.nombre = nombre;
-        this.precio = precio;
+        this.name = name;
+        this.price = price;
     }
 }
 
-let producto1 = new Productos(1, 'Remera', 550);
-let producto2 = new Productos(2, 'Short', 600);
-let producto3 = new Productos(3, 'Vaquero', 1100);
-let producto4 = new Productos(4, 'Camisa', 650);
-let producto5 = new Productos(5, 'Musculosa', 450);
-let producto6 = new Productos(6, 'Maya', 550);
-let producto7 = new Productos(7, 'Gorra', 200);
-let producto8 = new Productos(8, 'Protector solar', 400);
+let product1 = new Products(1, 'Remera', 550);
+let product2 = new Products(2, 'Short', 600);
+let product3 = new Products(3, 'Vaquero', 1100);
+let product4 = new Products(4, 'Camisa', 650);
+let product5 = new Products(5, 'Musculosa', 450);
+let product6 = new Products(6, 'Maya', 550);
+let product7 = new Products(7, 'Gorra', 200);
+let product8 = new Products(8, 'Protector solar', 400);
 
-let productos = [producto1, producto2, producto3, producto4, producto5, producto6, producto7, producto8]
+let products = [product1, product2, product3, product4, product5, product6, product7, product8]
 
 /*let productos = [
     { id: 1, nombre: "Remera", precio: 550 },
@@ -33,42 +33,42 @@ let productos = [producto1, producto2, producto3, producto4, producto5, producto
     { id: 8, nombre: "Protector solar", precio: 400 }
 ];*/
 
-const listarProductos = () => {
-    let lista = 'Seleccione el producto: \n\n';
-    for ( let i = 0; i < productos.length; i++){
-        lista += `${productos[i].id}. ${productos[i].nombre} - $${productos[i].precio}\n`;
+const listProducts = () => {
+    let list = 'Seleccione el producto: \n\n';
+    for ( let i = 0; i < products.length; i++){
+        list += `${products[i].id}. ${products[i].name} - $${products[i].price}\n`;
     }
-    lista += '\n9. Finalizar compra';
-    return lista;
+    list += '\n9. Finalizar compra';
+    return list;
 }
 
-const finalizarCompra = () => {
-    let salir = confirm('Quiere finalizar su compra?')
-            if (salir){
-                let productosComprados = carrito.map(item => `Cant.: ${item.cantidad} - ${item.nombre} - $${item.precio}`).join('\n');
-                alert(`Gracias por tu compra!\n\nSu compra:\n${productosComprados}\n\nTotal de la compra: $${total}`);
+const finalizePurchase = () => {
+    let exit = confirm('Quiere finalizar su compra?')
+            if (exit){
+                let productsPurchased = car.map(item => `Cant.: ${item.amount} - ${item.name} - $${item.price}`).join('\n');
+                alert(`Gracias por tu compra!\n\nSu compra:\n${productsPurchased}\n\nTotal de la compra: $${total}`);
             }else{
-                opcion = null;
+                option = null;
             }
 }
 
-const agregarCarrito = () => {
-    let indice = parseInt(opcion) - 1;
-    let producto = productos[indice];
-    let estaCarrito = carrito.find((e) => e.id == producto.id);
+const addCar = () => {
+    let index = parseInt(option) - 1;
+    let product = products[index];
+    let thisCart = carrito.find((e) => e.id == product.id);
 
     if(estaCarrito) {
-        estaCarrito.cantidad += 1;
-        estaCarrito.precio += producto.precio;
+        thisCart.amount += 1;
+        thisCart.price += product.price;
     }else{
-        carrito.push({ id: productos[indice].id, nombre: productos[indice].nombre, precio: productos[indice].precio, cantidad: 1});
+        car.push({ id: products[index].id, nombre: products[index].name, precio: products[index].price, amount: 1});
     }
-    total += productos[indice].precio;
-    alert(`Has añadido ${productos[indice].nombre}.\n\nTotal: $${total}`);
+    total += products[index].price;
+    alert(`Has añadido ${products[index].name}.\n\nTotal: $${total}`);
 }
 
-const selectProductos = () => {
-    switch (opcion) {
+const selectProducts = () => {
+    switch (option) {
         case '1':
         case '2':
         case '3':
@@ -77,10 +77,10 @@ const selectProductos = () => {
         case '6':
         case '7':
         case '8':
-            agregarCarrito();
+            addCar();
             break;
         case '9':
-            finalizarCompra();
+            finalizePurchase();
             break;
         default:
             alert(error);
@@ -91,9 +91,9 @@ const selectProductos = () => {
 
 do {
 
-    opcion = prompt(listarProductos());
-    selectProductos(opcion);
+    opcion = prompt(listProducts());
+    selectProducts(option);
 
-}while (opcion !== '9');
+}while (option !== '9');
 
-console.log(carrito, total)
+console.log(car, total)
