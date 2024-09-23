@@ -91,7 +91,7 @@ const selectProducts = () => {
 
 do {
 
-    opcion = prompt(listProducts());
+    option = prompt(listProducts());
     selectProducts(option);
 
 }while (option !== '9');
