@@ -22,17 +22,6 @@ let product8 = new Products(8, 'Protector solar', 400);
 
 let products = [product1, product2, product3, product4, product5, product6, product7, product8]
 
-/*let productos = [
-    { id: 1, nombre: "Remera", precio: 550 },
-    { id: 2, nombre: "Short", precio: 600 },
-    { id: 3, nombre: "Vaquero", precio: 1100 },
-    { id: 4, nombre: "Camisa", precio: 650 },
-    { id: 5, nombre: "Musculosa", precio: 450 },
-    { id: 6, nombre: "Maya", precio: 550 },
-    { id: 7, nombre: "Gorra", precio: 200 },
-    { id: 8, nombre: "Protector solar", precio: 400 }
-];*/
-
 const listProducts = () => {
     let list = 'Seleccione el producto: \n\n';
     for ( let i = 0; i < products.length; i++){
@@ -55,13 +44,13 @@ const finalizePurchase = () => {
 const addCar = () => {
     let index = parseInt(option) - 1;
     let product = products[index];
-    let thisCart = carrito.find((e) => e.id == product.id);
+    let thisCart = car.find((e) => e.id == product.id);
 
-    if(estaCarrito) {
+    if(thisCart) {
         thisCart.amount += 1;
         thisCart.price += product.price;
     }else{
-        car.push({ id: products[index].id, nombre: products[index].name, precio: products[index].price, amount: 1});
+        car.push({ id: products[index].id, name: products[index].name, price: products[index].price, amount: 1});
     }
     total += products[index].price;
     alert(`Has añadido ${products[index].name}.\n\nTotal: $${total}`);
