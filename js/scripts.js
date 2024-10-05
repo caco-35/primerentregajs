@@ -11,25 +11,80 @@ class Products {
     }
 }
 
-let product1 = new Products(1, 'Remera', 550);
-let product2 = new Products(2, 'Short', 600);
-let product3 = new Products(3, 'Vaquero', 1100);
-let product4 = new Products(4, 'Camisa', 650);
-let product5 = new Products(5, 'Musculosa', 450);
-let product6 = new Products(6, 'Maya', 550);
-let product7 = new Products(7, 'Gorra', 200);
-let product8 = new Products(8, 'Protector solar', 400);
+let products = [
+    {
+        id: 1,
+        name: 'Remera',
+        price: 550,
+        image: '../img/IMG-20231220-WA0005.jpg'
+        
+    },
+    {
+        id: 2,
+        name: 'Short',
+        price: 600,
+        image: '../img/IMG-20231220-WA0005.jpg'
+    },
+    {
+        id: 3,
+        name: 'Vaquero',
+        price: 1100,
+        image: '../img/IMG-20231220-WA0005.jpg'
+        
+    },
+    {
+        id: 4,
+        name: 'Camisa',
+        price: 650,
+        image: '../img/IMG-20231220-WA0005.jpg'
+    },
+    {
+        id: 5,
+        name: 'Musculosa',
+        price: 450,
+        image: '../img/IMG-20231220-WA0005.jpg'
+        
+    },
+    {
+        id: 6,
+        name: 'Maya',
+        price: 550,
+        image: '../img/IMG-20231220-WA0005.jpg'
+    },
+    {
+        id: 7,
+        name: 'Gorra',
+        price: 200,
+        image: '../img/IMG-20231220-WA0005.jpg'
+        
+    },
+    {
+        id: 8,
+        name: 'Protector solar',
+        price: 400,
+        image: '../img/IMG-20231220-WA0005.jpg'
+    }
+]
 
-let products = [product1, product2, product3, product4, product5, product6, product7, product8]
+//let product1 = new Products(1, 'Remera', 550);
+//let product2 = new Products(2, 'Short', 600);
+//let product3 = new Products(3, 'Vaquero', 1100);
+//let product4 = new Products(4, 'Camisa', 650);
+//let product5 = new Products(5, 'Musculosa', 450);
+//let product6 = new Products(6, 'Maya', 550);
+//let product7 = new Products(7, 'Gorra', 200);
+//let product8 = new Products(8, 'Protector solar', 400);
+//
+//let products = [product1, product2, product3, product4, product5, product6, product7, product8]
 
-const listProducts = () => {
+/*const listProducts = () => {
     let list = 'Seleccione el producto: \n\n';
     for ( let i = 0; i < products.length; i++){
         list += `${products[i].id}. ${products[i].name} - $${products[i].price}\n`;
     }
     list += '\n9. Finalizar compra';
     return list;
-}
+}*/
 
 const finalizePurchase = () => {
     let exit = confirm('Quiere finalizar su compra?')
@@ -41,8 +96,8 @@ const finalizePurchase = () => {
             }
 }
 
-const addCar = () => {
-    let index = parseInt(option) - 1;
+const addCar = (productId) => {
+    let index = productId - 1;
     let product = products[index];
     let thisCart = car.find((e) => e.id == product.id);
 
@@ -50,13 +105,13 @@ const addCar = () => {
         thisCart.amount += 1;
         thisCart.price += product.price;
     }else{
-        car.push({ id: products[index].id, name: products[index].name, price: products[index].price, amount: 1});
+        car.push({ id: products[index].id, name: products[index].name, price: products[index].price, image: products[index].image, amount: 1});
     }
     total += products[index].price;
     alert(`Has añadido ${products[index].name}.\n\nTotal: $${total}`);
 }
 
-const selectProducts = () => {
+/*const selectProducts = () => {
     switch (option) {
         case '1':
         case '2':
@@ -80,9 +135,47 @@ const selectProducts = () => {
 
 do {
 
-    option = prompt(listProducts());
+   option = prompt(listProducts());
     selectProducts(option);
 
-}while (option !== '9');
+}while (option !== '9');*/
 
-console.log(car, total)
+
+
+const displayProducts = () => {
+    const container = document.getElementById('productContainer');
+    products.forEach((product, index) => {
+        // Crear la tarjeta del producto
+        const card = document.createElement('div');
+            card.classList.add('product-card');
+
+        // Añadir la imagen del producto
+        const productImage = document.createElement('img');
+            productImage.src = product.image;
+            productImage.alt = product.name;  
+            card.appendChild(productImage);
+
+        // Añadir el nombre del producto
+        const productName = document.createElement('h3');
+            productName.textContent = product.name;
+            card.appendChild(productName);
+
+        // Añadir el precio del producto
+        const productPrice = document.createElement('p');
+            productPrice.textContent = `$${product.price}`;
+            card.appendChild(productPrice);
+
+        // Añadir el botón de comprar
+        const addButton = document.createElement('button');
+            addButton.textContent = 'Agregar al carrito';
+            addButton.classList.add('btn');
+            addButton.setAttribute('id', product.id); //seteamos el atributo id en una variable
+            addButton.addEventListener('click', () => {
+                const productId = event.target.getAttribute('id');
+                addCar(productId);
+            });
+        card.appendChild(addButton);
+        container.appendChild(card);
+    });
+}
+displayProducts();
