@@ -1,3 +1,14 @@
+const cartIcon = document.getElementById('cartIcon');
+const cartModal = document.getElementById('cartModal');
+const closeModal = document.querySelector('.close');
+const cartItemsContainer = document.getElementById('cartItems');
+const cartCount = document.getElementById('cartCount');
+const checkoutBtn = document.getElementById('checkoutBtn');
+const continueShoppingBtn = document.getElementById('continueShoppingBtn');
+const cartTotal = document.getElementById('cartTotal');
+
+
+
 let total = 0;
 let option;
 let car = [];
@@ -96,20 +107,6 @@ const finalizePurchase = () => {
             }
 }
 
-const addCar = (productId) => {
-    let index = productId - 1;
-    let product = products[index];
-    let thisCart = car.find((e) => e.id == product.id);
-
-    if(thisCart) {
-        thisCart.amount += 1;
-        thisCart.price += product.price;
-    }else{
-        car.push({ id: products[index].id, name: products[index].name, price: products[index].price, image: products[index].image, amount: 1});
-    }
-    total += products[index].price;
-    alert(`Has añadido ${products[index].name}.\n\nTotal: $${total}`);
-}
 
 /*const selectProducts = () => {
     switch (option) {
@@ -179,3 +176,92 @@ const displayProducts = () => {
     });
 }
 displayProducts();
+
+
+
+// Función para abrir el modal
+cartIcon.addEventListener('click', () => {
+    cartModal.style.display = 'block';
+    renderCartItems(); // Mostrar los artículos cuando se abre el modal
+});
+
+// Función para cerrar el modal
+closeModal.addEventListener('click', () => {
+    cartModal.style.display = 'none';
+});
+
+// Función para mostrar los artículos del carrito
+const renderCartItems = () => {
+    cartItemsContainer.innerHTML = ''; // Limpiar los artículos actuales
+
+    car.forEach((item, index) => {
+        const cartRow = document.createElement('div');
+        cartRow.classList.add('cart-item');
+
+        cartRow.innerHTML = `
+            <span>${item.name} (${item.amount})</span>
+            <span>$${item.price.toFixed(2)}</span>
+            <button onclick="removeItem(${index})">Eliminar</button>
+        `;
+        
+
+        cartItemsContainer.appendChild(cartRow);
+    });  
+
+    // Actualizar el contador del carrito
+    cartCount.textContent = car.reduce((e, item) => e + item.amount, 0);
+
+    cartTotal.textContent = `Total: $${total.toFixed(2)}`;
+};
+
+// Función para eliminar un artículo del carrito
+const removeItem = (index) => {
+    itemPrice = car[index].id;  
+    car[index].amount -= 1; // Disminuir la cantidad
+    car[index].price -= products[itemPrice - 1].price;
+    total -= products[itemPrice - 1].price;
+
+    if (car[index].amount === 0) {
+        car.splice(index, 1); // Eliminar el artículo si la cantidad es 0
+    }
+
+    renderCartItems(); // Actualizar la vista del carrito
+};
+
+// Función para agregar un artículo al carrito (puedes llamarla desde otros lugares)
+const addCar = (productId) => {
+    let index = productId - 1;
+    let product = products[index];
+    let thisCart = car.find((e) => e.id == product.id);
+
+    if(thisCart) {
+        thisCart.amount += 1;
+        thisCart.price += product.price;
+    }else{
+        car.push({ id: products[index].id, name: products[index].name, price: products[index].price, image: products[index].image, amount: 1});
+    }
+    total += products[index].price;
+    alert(`Has añadido ${products[index].name}.\n\nTotal: $${total}`);
+}
+
+
+// Función para finalizar la compra
+checkoutBtn.addEventListener('click', () => {
+    alert('Compra finalizada');
+    cart = []; // Vaciar el carrito
+    renderCartItems();
+    cartModal.style.display = 'none'; // Cerrar el modal
+});
+
+// Función para seguir comprando (solo cierra el modal)
+continueShoppingBtn.addEventListener('click', () => {
+    cartModal.style.display = 'none';
+});
+
+// Cerrar el modal si se hace clic fuera de él
+window.addEventListener('click', (event) => {
+    if (event.target == cartModal) {
+        cartModal.style.display = 'none';
+    }
+});
+
