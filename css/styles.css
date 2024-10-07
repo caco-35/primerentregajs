@@ -56,9 +56,11 @@ header {
 .cart-icon {
     cursor: pointer;
     position: relative;
+    font-size: 30px;
 }
 
 #cartCount {
+    font-size: 15px;
     background-color: red;
     color: white;
     padding: 5px 10px;

@@ -130,7 +130,6 @@ do {
 }while (option !== '9');*/
 
 
-
 const displayProducts = () => {
     const container = document.getElementById('productContainer');
     products.forEach((product) => {
@@ -201,28 +200,6 @@ closeModal.addEventListener('click', () => {
     cartModal.style.display = 'none';
 });
 
-//mostrar los articulos del carrito en filas
-/*const renderCartItems = () => {
-    cartItemsContainer.innerHTML = '';
-
-    car.forEach((item, index) => {
-        const cartRow = document.createElement('div');
-        cartRow.classList.add('cart-item');
-
-        cartRow.innerHTML = `
-            <span>${item.name} (${item.amount})</span>
-            <span>$${item.price.toFixed(2)}</span>
-            <button onclick="removeItem(${index})">Eliminar</button>
-        `;
-        
-
-        cartItemsContainer.appendChild(cartRow);
-    });  
-
-    carAmount();
-    cartTotal.textContent = `Total: $${total.toFixed(2)}`;
-};*/
-
 const renderCartItems = () => {
     cartItemsContainer.innerHTML = '';
 
@@ -246,11 +223,9 @@ const renderCartItems = () => {
 };
 
 
-
-// Función para eliminar un artículo del carrito
 const removeItem = (index) => {
     itemPrice = car[index].id;  
-    car[index].amount -= 1; // Disminuir la cantidad
+    car[index].amount -= 1;
     car[index].price -= products[itemPrice - 1].price;
     total -= products[itemPrice - 1].price;
     if (car[index].amount === 0) {
@@ -287,12 +262,11 @@ checkoutBtn.addEventListener('click', () => {
     }
 });
 
-// Función para seguir comprando (solo cierra el modal)
+
 continueShoppingBtn.addEventListener('click', () => {
     cartModal.style.display = 'none';
 });
 
-// Cerrar el modal si se hace clic fuera de él
 window.addEventListener('click', (event) => {
     if (event.target == cartModal) {
         cartModal.style.display = 'none';
