@@ -12,13 +12,14 @@ const cartTotal = document.getElementById('cartTotal');
 let total = 0;
 let option;
 let car = [];
-const error = 'Ingrese una opcion valida.'
+//const error = 'Ingrese una opcion valida.'
 
 class Products {
-    constructor(id, name, price){
+    constructor(id, name, price, image){
         this.id = id;
         this.name = name;
         this.price = price;
+        this.image = image;
     }
 }
 
@@ -97,15 +98,6 @@ let products = [
     return list;
 }*/
 
-const finalizePurchase = () => {
-    let exit = confirm('Quiere finalizar su compra?')
-            if (exit){
-                let productsPurchased = car.map(item => `Cant.: ${item.amount} - ${item.name} - $${item.price}`).join('\n');
-                alert(`Gracias por tu compra!\n\nSu compra:\n${productsPurchased}\n\nTotal de la compra: $${total}`);
-            }else{
-                option = null;
-            }
-}
 
 
 /*const selectProducts = () => {
@@ -141,7 +133,7 @@ do {
 
 const displayProducts = () => {
     const container = document.getElementById('productContainer');
-    products.forEach((product, index) => {
+    products.forEach((product) => {
         // Crear la tarjeta del producto
         const card = document.createElement('div');
             card.classList.add('product-card');
@@ -159,7 +151,7 @@ const displayProducts = () => {
 
         // Añadir el precio del producto
         const productPrice = document.createElement('p');
-            productPrice.textContent = `$${product.price}`;
+            productPrice.textContent = `$ ${product.price}`;
             card.appendChild(productPrice);
 
         // Añadir el botón de comprar
@@ -177,7 +169,26 @@ const displayProducts = () => {
 }
 displayProducts();
 
+const carAmount = () => {
+    cartCount.textContent = car.reduce((e, item) => e + item.amount, 0);
+}
 
+
+// Función para agregar un artículo al carrito (puedes llamarla desde otros lugares)
+const addCar = (productId) => {
+    let index = productId - 1;
+    let product = products[index];
+    let thisCart = car.find((e) => e.id == product.id);
+
+    if(thisCart) {
+        thisCart.amount += 1;
+        thisCart.price += product.price;
+    }else{
+        car.push({ id: products[index].id, name: products[index].name, price: products[index].price, image: products[index].image, amount: 1});
+    }
+    total += products[index].price;
+    carAmount();
+}
 
 // Función para abrir el modal
 cartIcon.addEventListener('click', () => {
@@ -190,9 +201,9 @@ closeModal.addEventListener('click', () => {
     cartModal.style.display = 'none';
 });
 
-// Función para mostrar los artículos del carrito
-const renderCartItems = () => {
-    cartItemsContainer.innerHTML = ''; // Limpiar los artículos actuales
+//mostrar los articulos del carrito en filas
+/*const renderCartItems = () => {
+    cartItemsContainer.innerHTML = '';
 
     car.forEach((item, index) => {
         const cartRow = document.createElement('div');
@@ -208,11 +219,33 @@ const renderCartItems = () => {
         cartItemsContainer.appendChild(cartRow);
     });  
 
-    // Actualizar el contador del carrito
-    cartCount.textContent = car.reduce((e, item) => e + item.amount, 0);
-
+    carAmount();
     cartTotal.textContent = `Total: $${total.toFixed(2)}`;
+};*/
+
+const renderCartItems = () => {
+    cartItemsContainer.innerHTML = '';
+
+    car.forEach((item, index) => {
+        const cartRow = document.createElement('div');
+        cartRow.classList.add('cart-item');
+
+        cartRow.innerHTML = `
+            <div class="cart-column product-name">${item.name} (${item.amount})</div>
+            <div class="cart-column product-price">$ ${item.price.toFixed(2)}</div>
+            <div class="cart-column remove-item">
+                <button onclick="removeItem(${index})">Eliminar</button>
+            </div>
+        `;
+
+        cartItemsContainer.appendChild(cartRow);
+    });
+
+    carAmount();
+    cartTotal.textContent = `Total: $ ${total.toFixed(2)}`;
 };
+
+
 
 // Función para eliminar un artículo del carrito
 const removeItem = (index) => {
@@ -220,37 +253,38 @@ const removeItem = (index) => {
     car[index].amount -= 1; // Disminuir la cantidad
     car[index].price -= products[itemPrice - 1].price;
     total -= products[itemPrice - 1].price;
-
     if (car[index].amount === 0) {
-        car.splice(index, 1); // Eliminar el artículo si la cantidad es 0
+        car.splice(index, 1); 
     }
 
-    renderCartItems(); // Actualizar la vista del carrito
+    renderCartItems();
+    carAmount();
 };
 
-// Función para agregar un artículo al carrito (puedes llamarla desde otros lugares)
-const addCar = (productId) => {
-    let index = productId - 1;
-    let product = products[index];
-    let thisCart = car.find((e) => e.id == product.id);
-
-    if(thisCart) {
-        thisCart.amount += 1;
-        thisCart.price += product.price;
-    }else{
-        car.push({ id: products[index].id, name: products[index].name, price: products[index].price, image: products[index].image, amount: 1});
-    }
-    total += products[index].price;
-    alert(`Has añadido ${products[index].name}.\n\nTotal: $${total}`);
-}
 
 
-// Función para finalizar la compra
+//const finalizePurchase = () => {
+//    let exit = confirm('Quiere finalizar su compra?')
+//            if (exit){
+//                let productsPurchased = car.map(item => `Cant.: ${item.amount} - ${item.name} - $${item.price}`).join('\n');
+//                alert(`Gracias por tu compra!\n\nSu compra:\n${productsPurchased}\n\nTotal de la compra: $${total}`);
+//            }else{
+//                option = null;
+//            }
+//}
+
 checkoutBtn.addEventListener('click', () => {
-    alert('Compra finalizada');
-    cart = []; // Vaciar el carrito
-    renderCartItems();
-    cartModal.style.display = 'none'; // Cerrar el modal
+    let exit = confirm('Quiere finalizar su compra?')
+    
+    if (exit){
+        alert('Gracias por tu compra');
+        car = [];
+        total = 0;
+        carAmount();
+        cartModal.style.display = 'none';
+    }else{
+        cartModal.style.display = 'block';
+    }
 });
 
 // Función para seguir comprando (solo cierra el modal)
@@ -264,4 +298,3 @@ window.addEventListener('click', (event) => {
         cartModal.style.display = 'none';
     }
 });
-
