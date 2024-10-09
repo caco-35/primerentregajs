@@ -170,6 +170,30 @@ const carAmount = () => {
     cartCount.textContent = car.reduce((e, item) => e + item.amount, 0);
 }
 
+/*Carrito con LocalStorage*/
+
+// Función para guardar el carrito en localStorage
+const saveCartToLocalStorage = () => {
+    localStorage.setItem('cart', JSON.stringify(car));
+    localStorage.setItem('total', total.toFixed(2));
+};
+
+const loadCartFromLocalStorage = () => {
+    const storedCart = localStorage.getItem('cart');
+    const storedTotal = localStorage.getItem('total');
+    if (storedCart) {
+        car = JSON.parse(storedCart);
+        renderCartItems(); // Renderiza el carrito después de cargarlo
+    }
+    if (storedTotal) {
+        total = parseFloat(storedTotal); // Cargar el total guardado
+        cartTotal.textContent = `Total: $ ${total.toFixed(2)}`; // Mostrar el total en pantalla
+    }
+};
+
+/*Carrito sin LocalStorage*/
+
+/*
 const addCar = (productId) => {
     let index = productId - 1;
     let product = products[index];
@@ -184,6 +208,25 @@ const addCar = (productId) => {
     total += products[index].price;
     carAmount();
 }
+*/
+const addCar = (productId) => {
+    let index = productId - 1;
+    let product = products[index];
+    let thisCart = car.find((e) => e.id == product.id);
+
+    if(thisCart) {
+        thisCart.amount += 1;
+        thisCart.price += product.price;
+    } else {
+        car.push({ id: products[index].id, name: products[index].name, price: products[index].price, image: products[index].image, amount: 1 });
+    }
+    total += products[index].price;
+    carAmount();
+
+    // Guardar el carrito actualizado en localStorage
+    saveCartToLocalStorage();
+    renderCartItems(); // Actualizar el carrito en pantalla después de añadir un producto
+};
 
 cartIcon.addEventListener('click', () => {
     cartModal.style.display = 'block';
@@ -220,14 +263,19 @@ const renderCartItems = () => {
     cartTotal.textContent = `Total: $ ${total.toFixed(2)}`;
 };
 
+// Llamar a esta función al iniciar la página para cargar el carrito
+loadCartFromLocalStorage();
+
 
 const removeItem = (index) => {
     itemPrice = car[index].id;  
     car[index].amount -= 1;
     car[index].price -= products[itemPrice - 1].price;
     total -= products[itemPrice - 1].price;
+    saveCartToLocalStorage();
     if (car[index].amount === 0) {
         car.splice(index, 1); 
+        saveCartToLocalStorage();
     }
 
     renderCartItems();
@@ -252,6 +300,7 @@ checkoutBtn.addEventListener('click', () => {
         car = [];
         total = 0;
         carAmount();
+        saveCartToLocalStorage();
         modalContent.innerHTML = `
             <p>Gracias por su compra</p>
             <button id="closeBtn" class="btn-bye">Aceptar</button>
@@ -267,10 +316,10 @@ checkoutBtn.addEventListener('click', () => {
         modalFin.style.display = 'none';
     });
 
-    const closeBtn2 = document.querySelector('.close2');
-    closeBtn2.addEventListener('click', () => {
-        modalFin.style.display = 'none';
-    });
+    //const closeBtn2 = document.querySelector('.close2');
+    //closeBtn2.addEventListener('click', () => {
+    //    modalFin.style.display = 'none';
+    //});
 });
 
 
