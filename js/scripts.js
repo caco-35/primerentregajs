@@ -1,11 +1,13 @@
 const cartIcon = document.getElementById('cartIcon');
 const cartModal = document.getElementById('cartModal');
 const closeModal = document.querySelector('.close');
+const closeModal2 = document.querySelector('.close2');
 const cartItemsContainer = document.getElementById('cartItems');
 const cartCount = document.getElementById('cartCount');
 const checkoutBtn = document.getElementById('checkoutBtn');
 const continueShoppingBtn = document.getElementById('continueShoppingBtn');
 const cartTotal = document.getElementById('cartTotal');
+const modalContent = document.querySelector('.modal-content2');
 
 
 
@@ -28,53 +30,53 @@ let products = [
         id: 1,
         name: 'Remera',
         price: 550,
-        image: '../img/IMG-20231220-WA0005.jpg'
+        image: '../img/RemeraBasica.jpg'
         
     },
     {
         id: 2,
         name: 'Short',
         price: 600,
-        image: '../img/IMG-20231220-WA0005.jpg'
+        image: '../img/short.jpg'
     },
     {
         id: 3,
         name: 'Vaquero',
         price: 1100,
-        image: '../img/IMG-20231220-WA0005.jpg'
+        image: '../img/pantalon-vaquero.jpg'
         
     },
     {
         id: 4,
         name: 'Camisa',
         price: 650,
-        image: '../img/IMG-20231220-WA0005.jpg'
+        image: '../img/camisa.jpg'
     },
     {
         id: 5,
         name: 'Musculosa',
         price: 450,
-        image: '../img/IMG-20231220-WA0005.jpg'
+        image: '../img/musculosa.jpg'
         
     },
     {
         id: 6,
         name: 'Maya',
         price: 550,
-        image: '../img/IMG-20231220-WA0005.jpg'
+        image: '../img/maya.jpg'
     },
     {
         id: 7,
         name: 'Gorra',
         price: 200,
-        image: '../img/IMG-20231220-WA0005.jpg'
+        image: '../img/gorro.jpg'
         
     },
     {
         id: 8,
         name: 'Protector solar',
         price: 400,
-        image: '../img/IMG-20231220-WA0005.jpg'
+        image: '../img/protectorsolar.jpg'
     }
 ]
 
@@ -133,31 +135,27 @@ do {
 const displayProducts = () => {
     const container = document.getElementById('productContainer');
     products.forEach((product) => {
-        // Crear la tarjeta del producto
+
         const card = document.createElement('div');
             card.classList.add('product-card');
 
-        // Añadir la imagen del producto
         const productImage = document.createElement('img');
             productImage.src = product.image;
             productImage.alt = product.name;  
             card.appendChild(productImage);
 
-        // Añadir el nombre del producto
         const productName = document.createElement('h3');
             productName.textContent = product.name;
             card.appendChild(productName);
 
-        // Añadir el precio del producto
         const productPrice = document.createElement('p');
             productPrice.textContent = `$ ${product.price}`;
             card.appendChild(productPrice);
 
-        // Añadir el botón de comprar
         const addButton = document.createElement('button');
             addButton.textContent = 'Agregar al carrito';
             addButton.classList.add('btn');
-            addButton.setAttribute('id', product.id); //seteamos el atributo id en una variable
+            addButton.setAttribute('id', product.id);
             addButton.addEventListener('click', () => {
                 const productId = event.target.getAttribute('id');
                 addCar(productId);
@@ -172,8 +170,6 @@ const carAmount = () => {
     cartCount.textContent = car.reduce((e, item) => e + item.amount, 0);
 }
 
-
-// Función para agregar un artículo al carrito (puedes llamarla desde otros lugares)
 const addCar = (productId) => {
     let index = productId - 1;
     let product = products[index];
@@ -189,15 +185,18 @@ const addCar = (productId) => {
     carAmount();
 }
 
-// Función para abrir el modal
 cartIcon.addEventListener('click', () => {
     cartModal.style.display = 'block';
-    renderCartItems(); // Mostrar los artículos cuando se abre el modal
+    renderCartItems(); 
 });
 
-// Función para cerrar el modal
+
 closeModal.addEventListener('click', () => {
     cartModal.style.display = 'none';
+});
+
+closeModal2.addEventListener('click', () => {
+    modalFin.style.display = 'none';
 });
 
 const renderCartItems = () => {
@@ -206,12 +205,11 @@ const renderCartItems = () => {
     car.forEach((item, index) => {
         const cartRow = document.createElement('div');
         cartRow.classList.add('cart-item');
-
         cartRow.innerHTML = `
-            <div class="cart-column product-name">${item.name} (${item.amount})</div>
-            <div class="cart-column product-price">$ ${item.price.toFixed(2)}</div>
-            <div class="cart-column remove-item">
-                <button onclick="removeItem(${index})">Eliminar</button>
+            <div>${item.name} (${item.amount})</div>
+            <div class="item-price">$ ${item.price.toFixed(2)}</div>
+            <div class="btn-delete-item">
+                <button class="btn-delete" onclick="removeItem(${index})">Eliminar</button>
             </div>
         `;
 
@@ -237,29 +235,42 @@ const removeItem = (index) => {
 };
 
 
-
-//const finalizePurchase = () => {
-//    let exit = confirm('Quiere finalizar su compra?')
-//            if (exit){
-//                let productsPurchased = car.map(item => `Cant.: ${item.amount} - ${item.name} - $${item.price}`).join('\n');
-//                alert(`Gracias por tu compra!\n\nSu compra:\n${productsPurchased}\n\nTotal de la compra: $${total}`);
-//            }else{
-//                option = null;
-//            }
-//}
-
 checkoutBtn.addEventListener('click', () => {
-    let exit = confirm('Quiere finalizar su compra?')
     
-    if (exit){
-        alert('Gracias por tu compra');
+    modalContent.innerHTML = `      
+        <p>¿Desea finalizar su compra?</p>
+        <div class="cart-buttons">
+            <button class="btn-finalize" id="aceptBtn">Aceptar</button>
+            <button class="btn-continue" id="cancelBtn">Cancelar</button>
+        </div>
+    `;
+    modalFin.style.display = 'block';
+    const aceptBtn = document.getElementById('aceptBtn');
+    const cancelBtn = document.getElementById('cancelBtn');
+
+    aceptBtn.addEventListener('click', () => {
         car = [];
         total = 0;
         carAmount();
-        cartModal.style.display = 'none';
-    }else{
-        cartModal.style.display = 'block';
-    }
+        modalContent.innerHTML = `
+            <p>Gracias por su compra</p>
+            <button id="closeBtn" class="btn-bye">Aceptar</button>
+        `;
+        const closeBtn = document.getElementById('closeBtn');
+            closeBtn.addEventListener('click', () => {
+                modalFin.style.display = 'none';
+                cartModal.style.display = 'none';
+            });
+        });
+
+    cancelBtn.addEventListener('click', () => {
+        modalFin.style.display = 'none';
+    });
+
+    const closeBtn2 = document.querySelector('.close2');
+    closeBtn2.addEventListener('click', () => {
+        modalFin.style.display = 'none';
+    });
 });
 
 
