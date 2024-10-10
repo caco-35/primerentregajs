@@ -172,7 +172,6 @@ const carAmount = () => {
 
 /*Carrito con LocalStorage*/
 
-// Función para guardar el carrito en localStorage
 const saveCartToLocalStorage = () => {
     localStorage.setItem('cart', JSON.stringify(car));
     localStorage.setItem('total', total.toFixed(2));
@@ -183,11 +182,11 @@ const loadCartFromLocalStorage = () => {
     const storedTotal = localStorage.getItem('total');
     if (storedCart) {
         car = JSON.parse(storedCart);
-        renderCartItems(); // Renderiza el carrito después de cargarlo
+        renderCartItems();
     }
     if (storedTotal) {
-        total = parseFloat(storedTotal); // Cargar el total guardado
-        cartTotal.textContent = `Total: $ ${total.toFixed(2)}`; // Mostrar el total en pantalla
+        total = parseFloat(storedTotal);
+        cartTotal.textContent = `Total: $ ${total.toFixed(2)}`;
     }
 };
 
@@ -222,10 +221,8 @@ const addCar = (productId) => {
     }
     total += products[index].price;
     carAmount();
-
-    // Guardar el carrito actualizado en localStorage
     saveCartToLocalStorage();
-    renderCartItems(); // Actualizar el carrito en pantalla después de añadir un producto
+    renderCartItems();
 };
 
 cartIcon.addEventListener('click', () => {
@@ -262,8 +259,6 @@ const renderCartItems = () => {
     carAmount();
     cartTotal.textContent = `Total: $ ${total.toFixed(2)}`;
 };
-
-// Llamar a esta función al iniciar la página para cargar el carrito
 loadCartFromLocalStorage();
 
 
