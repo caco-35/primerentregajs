@@ -1,0 +1,54 @@
+[
+    {
+        "id": 1,
+        "name": "Remera",
+        "price": 550,
+        "image": "../img/RemeraBasica.jpg"
+
+    },
+    {
+        "id": 2,
+        "name": "Short",
+        "price": 600,
+        "image": "../img/short.jpg"
+    },
+    {
+        "id": 3,
+        "name": "Vaquero",
+        "price": 1100,
+        "image": "../img/pantalon-vaquero.jpg"
+
+    },
+    {
+        "id": 4,
+        "name": "Camisa",
+        "price": 650,
+        "image": "../img/camisa.jpg"
+    },
+    {
+        "id": 5,
+        "name": "Musculosa",
+        "price": 450,
+        "image": "../img/musculosa.jpg"
+
+    },
+    {
+        "id": 6,
+        "name": "Maya",
+        "price": 550,
+        "image": "../img/maya.jpg"
+    },
+    {
+        "id": 7,
+        "name": "Gorra",
+        "price": 200,
+        "image": "../img/gorro.jpg"
+
+    },
+    {
+        "id": 8,
+        "name": "Protector solar",
+        "price": 400,
+        "image": "../img/protectorsolar.jpg"
+    }
+]

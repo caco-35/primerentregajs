@@ -134,6 +134,38 @@ do {
 
 const displayProducts = () => {
     const container = document.getElementById('productContainer');
+
+    fetch('../datos/producst.json')
+        .then(response => response.json())
+        .then(products => {
+            products.forEach((product) => {
+                const cardHTML = `
+                    <div class="product-card">
+                        <img src="${product.image}" alt="${product.name}">
+                        <h3>${product.name}</h3>
+                        <p>$ ${product.price}</p>
+                        <button class="btn" id="${product.id}">Agregar al carrito</button>
+                    </div>
+                `;
+                container.innerHTML += cardHTML;
+            });
+
+            const buttons = document.querySelectorAll('.btn');
+            buttons.forEach(button => {
+                button.addEventListener('click', (event) => {
+                    const productId = event.target.getAttribute('id');
+                    addCar(productId);
+                });
+            });
+        })
+        .catch(error => console.error('Error al cargar los productos:', error));
+}
+
+displayProducts();
+
+
+/*const displayProducts = () => {
+    const container = document.getElementById('productContainer');
     products.forEach((product) => {
 
         const card = document.createElement('div');
@@ -164,7 +196,7 @@ const displayProducts = () => {
         container.appendChild(card);
     });
 }
-displayProducts();
+displayProducts(); */
 
 const carAmount = () => {
     cartCount.textContent = car.reduce((e, item) => e + item.amount, 0);
