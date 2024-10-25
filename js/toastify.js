@@ -25,7 +25,3 @@ const showDeleteItemToast = (itemName) => {
         }
     }).showToast();
 }
-
-const filterProduct = () => {
-    const selectCategory = document.getElementById('category-filter').value;
-}
