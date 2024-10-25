@@ -1,9 +1,15 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,100..700;1,100..700&family=Rubik+Wet+Paint&family=Teko:wght@300..700&display=swap" rel="stylesheet">  
     <script src="./js/scripts.js" defer></script>
+    <script src="./js/toastify.js" defer></script>
     <link rel="stylesheet" href="./css/styles.css"> 
     <title>Document</title>
 </head>
@@ -18,9 +24,7 @@
     <main>
         <h2>Productos:</h2>
         <div class="product-container" id="productContainer"></div>
-        
-        <div class="spinner" id="loading"></div>
-        
+        <div class="spinner" id="loading"></div>        
         <div id="cartModal" class="modal">
             <div class="modal-content">
                 <span class="close">&times;</span>

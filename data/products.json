@@ -3,8 +3,8 @@
         "id": 1,
         "name": "Remera",
         "price": 550,
-        "image": "../img/RemeraBasica.jpg"
-
+        "image": "../img/RemeraBasica.jpg",
+        "category": "ropa"
     },
     {
         "id": 2,

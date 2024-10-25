@@ -134,16 +134,23 @@ do {
 }while (option !== '9');*/
 
 
+
 const displayProducts = async () => {
     const container = document.getElementById('productContainer');
     loading.style.display = 'flex';
     await sleep(1500);
 
-    fetch('../datos/products.json')
+    fetch('../data/products.json')
         .then(response => response.json())
         .then(products => {
             loading.style.display = 'none';
             container.innerHTML = '';
+
+            //Idea de filtro
+            //const filteredProducts = products.filter(product => 
+            //    product.name.toLowerCase().includes("protector solar")
+            //);
+
             products.forEach((product) => {
                 const cardHTML = `
                     <div class="product-card">
@@ -251,7 +258,7 @@ const addCar = (productId) => {
 }
 */
 const addCar = (productId) => {
-    fetch('../datos/products.json')
+    fetch('../data/products.json')
     .then(response => response.json())
     .then(products => {
         let index = productId - 1;
@@ -265,12 +272,13 @@ const addCar = (productId) => {
             car.push({ id: products[index].id, name: products[index].name, price: products[index].price, image: products[index].image, amount: 1 });
         }
         total += products[index].price;
+        showAddItemToast(products[index].name)
         carAmount();
         saveCartToLocalStorage();
         renderCartItems();
         
     })
-    .catch(error => console.error('Error al cargar los productos:', error));      
+    .catch(error => console.error('Error al cargar los productos', error));      
 };
 
 cartIcon.addEventListener('click', () => {
@@ -296,8 +304,9 @@ const renderCartItems = () => {
         cartRow.innerHTML = `
             <div>${item.name} (${item.amount})</div>
             <div class="item-price">$ ${item.price.toFixed(2)}</div>
-            <div class="btn-delete-item">
-                <button class="btn-delete" onclick="removeItem(${index})">Eliminar</button>
+            <div class="btns-items">
+                <button class="btn-add" onclick="addItem(${index})">+</button>
+                <button class="btn-delete" onclick="removeItem(${index})">-</button>
             </div>
         `;
 
@@ -309,9 +318,24 @@ const renderCartItems = () => {
 };
 loadCartFromLocalStorage();
 
+const addItem = (index) => {
+    fetch('../data/products.json')
+    .then(response => response.json())
+    .then(products => {
+        itemPrice = car[index].id;
+        car[index].amount += 1;
+        car[index].price += products[itemPrice - 1].price;
+        total += products[itemPrice - 1].price;
+        saveCartToLocalStorage();
+        renderCartItems();
+        carAmount();
+        showAddItemToast(car[index].name);
+    })
+    .catch(error => console.error('Error al agregar producto', error));
+}
 
 const removeItem = (index) => {
-    fetch('../datos/products.json')
+    fetch('../data/products.json')
     .then(response => response.json())
     .then(products => {
         itemPrice = car[index].id;  
@@ -324,9 +348,10 @@ const removeItem = (index) => {
             saveCartToLocalStorage();
         }
         renderCartItems();
-        carAmount();    
+        carAmount();
+        showDeleteItemToast(car[index].name);    
     })
-    .catch(error => console.error('Error al eliminar producto:', error));   
+    .catch(error => console.error('Error al eliminar producto', error));   
 };
 
 

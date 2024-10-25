@@ -1,5 +1,5 @@
 body {
-    font-family: Arial, sans-serif;
+    font-family: "Josefin Sans", sans-serif;
     background-color: #f4f4f4;
     margin: 0;
 }
@@ -194,7 +194,7 @@ header h1 {
     text-align: end;
 }
 
-.btn-delete-item {
+.btns-items {
     margin-left: 50%;
 }
 
@@ -203,6 +203,17 @@ header h1 {
     margin-top: 20px;
     display: flex;
     justify-content: space-between;
+}
+.btn-add {
+    padding: 10px 20px;
+    border: none;
+    background-color: rgb(5, 202, 87);
+    color: white;
+    cursor: pointer;
+    border-radius: 5px;
+}
+.btn-add:hover{
+    background-color: rgb(5, 161, 70);
 }
 
 .btn-delete {
