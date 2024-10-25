@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="./css/styles.css">
-    <script src="js/scripts.js" async></script>
+    <script src="./js/scripts.js" defer></script>
+    <link rel="stylesheet" href="./css/styles.css"> 
     <title>Document</title>
 </head>
 <body>
@@ -18,7 +18,9 @@
     <main>
         <h2>Productos:</h2>
         <div class="product-container" id="productContainer"></div>
-
+        
+        <div class="spinner" id="loading"></div>
+        
         <div id="cartModal" class="modal">
             <div class="modal-content">
                 <span class="close">&times;</span>
@@ -34,6 +36,7 @@
             </div>
         </div>
         
+
         <div id="modalFin" class="modalFinalize" >
             <div class="modal-content2">
                 <span class="close2">&times;</span>

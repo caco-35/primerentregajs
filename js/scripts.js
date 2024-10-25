@@ -9,6 +9,7 @@ const continueShoppingBtn = document.getElementById('continueShoppingBtn');
 const cartTotal = document.getElementById('cartTotal');
 const modalContent = document.querySelector('.modal-content2');
 
+const sleep = (ms) => new Promise(resolve => setTimeout(resolve, ms));
 
 
 let total = 0;
@@ -25,7 +26,7 @@ class Products {
     }
 }
 
-let products = [
+/*let products = [
     {
         id: 1,
         name: 'Remera',
@@ -79,6 +80,7 @@ let products = [
         image: '../img/protectorsolar.jpg'
     }
 ]
+*/
 
 //let product1 = new Products(1, 'Remera', 550);
 //let product2 = new Products(2, 'Short', 600);
@@ -132,12 +134,16 @@ do {
 }while (option !== '9');*/
 
 
-const displayProducts = () => {
+const displayProducts = async () => {
     const container = document.getElementById('productContainer');
+    loading.style.display = 'flex';
+    await sleep(1500);
 
-    fetch('../datos/producst.json')
+    fetch('../datos/products.json')
         .then(response => response.json())
         .then(products => {
+            loading.style.display = 'none';
+            container.innerHTML = '';
             products.forEach((product) => {
                 const cardHTML = `
                     <div class="product-card">
@@ -158,7 +164,11 @@ const displayProducts = () => {
                 });
             });
         })
-        .catch(error => console.error('Error al cargar los productos:', error));
+        .catch(error => {
+            loading.style.display = 'none';
+            console.error('Error al cargar los productos:', error);
+            container.innerHTML = 'Error al cargar los productos';
+        });
 }
 
 displayProducts();
@@ -241,20 +251,26 @@ const addCar = (productId) => {
 }
 */
 const addCar = (productId) => {
-    let index = productId - 1;
-    let product = products[index];
-    let thisCart = car.find((e) => e.id == product.id);
+    fetch('../datos/products.json')
+    .then(response => response.json())
+    .then(products => {
+        let index = productId - 1;
+        let product = products[index];
+        let thisCart = car.find((e) => e.id == product.id);
 
-    if(thisCart) {
-        thisCart.amount += 1;
-        thisCart.price += product.price;
-    } else {
-        car.push({ id: products[index].id, name: products[index].name, price: products[index].price, image: products[index].image, amount: 1 });
-    }
-    total += products[index].price;
-    carAmount();
-    saveCartToLocalStorage();
-    renderCartItems();
+        if(thisCart) {
+            thisCart.amount += 1;
+            thisCart.price += product.price;
+        } else {
+            car.push({ id: products[index].id, name: products[index].name, price: products[index].price, image: products[index].image, amount: 1 });
+        }
+        total += products[index].price;
+        carAmount();
+        saveCartToLocalStorage();
+        renderCartItems();
+        
+    })
+    .catch(error => console.error('Error al cargar los productos:', error));      
 };
 
 cartIcon.addEventListener('click', () => {
@@ -295,23 +311,26 @@ loadCartFromLocalStorage();
 
 
 const removeItem = (index) => {
-    itemPrice = car[index].id;  
-    car[index].amount -= 1;
-    car[index].price -= products[itemPrice - 1].price;
-    total -= products[itemPrice - 1].price;
-    saveCartToLocalStorage();
-    if (car[index].amount === 0) {
-        car.splice(index, 1); 
+    fetch('../datos/products.json')
+    .then(response => response.json())
+    .then(products => {
+        itemPrice = car[index].id;  
+        car[index].amount -= 1;
+        car[index].price -= products[itemPrice - 1].price;
+        total -= products[itemPrice - 1].price;
         saveCartToLocalStorage();
-    }
-
-    renderCartItems();
-    carAmount();
+        if (car[index].amount === 0) {
+            car.splice(index, 1); 
+            saveCartToLocalStorage();
+        }
+        renderCartItems();
+        carAmount();    
+    })
+    .catch(error => console.error('Error al eliminar producto:', error));   
 };
 
 
-checkoutBtn.addEventListener('click', () => {
-    
+checkoutBtn.addEventListener('click', () => {  
     modalContent.innerHTML = `      
         <p>¿Desea finalizar su compra?</p>
         <div class="cart-buttons">
