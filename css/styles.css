@@ -6,7 +6,8 @@ body {
 
 header {
     display: flex;
-    justify-content: space-between;
+    justify-content: space-around;
+    align-items: center;
     background-color: #014e2e;
     color: white;
 }
@@ -26,12 +27,53 @@ header h1 {
     font-size: 15px;
     background-color: red;
     color: white;
-    padding: 5px 10px;
+    padding: 5px 8px;
     border-radius: 50%;
     position: absolute;
     top: 10px;
     right: 10px;
 }
+
+.input-field{
+    position: relative;
+}
+
+.input-field input{
+    width: 350px;
+    height: 40px;
+    border-radius: 6px;
+    font-size: 18px;
+    padding: 0px 15px;
+    border: 2px solid #0c0c0c;
+    background: white;
+    color: #0c0c0c;
+    outline: none;
+}
+
+.input-field label{
+    position: absolute;
+    top: 50%;
+    left: 15px;
+    transform: translateY(-50%);
+    color: #0a0a0a;
+    font-size: 19px;
+    pointer-events: none;
+    transition: .3s;
+}
+
+input:focus{
+    border: 2px solid #1CD6CE;
+}
+
+input:focus ~ label,
+input:valid ~ label{
+    top: 0;
+    font-size: 16px;
+    padding: 0 15px;
+    background: #1CD6CE;
+    border-radius: 10px;
+}
+
 
 .product-container {
     display: flex;

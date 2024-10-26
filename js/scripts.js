@@ -7,6 +7,7 @@ const cartCount = document.getElementById('cartCount');
 const checkoutBtn = document.getElementById('checkoutBtn');
 const continueShoppingBtn = document.getElementById('continueShoppingBtn');
 const cartTotal = document.getElementById('cartTotal');
+const searchInput = document.getElementById('searchInput');
 const modalContent = document.querySelector('.modal-content2');
 
 const sleep = (ms) => new Promise(resolve => setTimeout(resolve, ms));
@@ -15,7 +16,7 @@ const sleep = (ms) => new Promise(resolve => setTimeout(resolve, ms));
 let total = 0;
 let option;
 let car = [];
-//const error = 'Ingrese una opcion valida.'
+let productsData = [];  // Variable para almacenar los productos
 
 class Products {
     constructor(id, name, price, image){
@@ -26,194 +27,60 @@ class Products {
     }
 }
 
-/*let products = [
-    {
-        id: 1,
-        name: 'Remera',
-        price: 550,
-        image: '../img/RemeraBasica.jpg'
-        
-    },
-    {
-        id: 2,
-        name: 'Short',
-        price: 600,
-        image: '../img/short.jpg'
-    },
-    {
-        id: 3,
-        name: 'Vaquero',
-        price: 1100,
-        image: '../img/pantalon-vaquero.jpg'
-        
-    },
-    {
-        id: 4,
-        name: 'Camisa',
-        price: 650,
-        image: '../img/camisa.jpg'
-    },
-    {
-        id: 5,
-        name: 'Musculosa',
-        price: 450,
-        image: '../img/musculosa.jpg'
-        
-    },
-    {
-        id: 6,
-        name: 'Maya',
-        price: 550,
-        image: '../img/maya.jpg'
-    },
-    {
-        id: 7,
-        name: 'Gorra',
-        price: 200,
-        image: '../img/gorro.jpg'
-        
-    },
-    {
-        id: 8,
-        name: 'Protector solar',
-        price: 400,
-        image: '../img/protectorsolar.jpg'
-    }
-]
-*/
-
-//let product1 = new Products(1, 'Remera', 550);
-//let product2 = new Products(2, 'Short', 600);
-//let product3 = new Products(3, 'Vaquero', 1100);
-//let product4 = new Products(4, 'Camisa', 650);
-//let product5 = new Products(5, 'Musculosa', 450);
-//let product6 = new Products(6, 'Maya', 550);
-//let product7 = new Products(7, 'Gorra', 200);
-//let product8 = new Products(8, 'Protector solar', 400);
-//
-//let products = [product1, product2, product3, product4, product5, product6, product7, product8]
-
-/*const listProducts = () => {
-    let list = 'Seleccione el producto: \n\n';
-    for ( let i = 0; i < products.length; i++){
-        list += `${products[i].id}. ${products[i].name} - $${products[i].price}\n`;
-    }
-    list += '\n9. Finalizar compra';
-    return list;
-}*/
-
-
-
-/*const selectProducts = () => {
-    switch (option) {
-        case '1':
-        case '2':
-        case '3':
-        case '4': 
-        case '5':
-        case '6':
-        case '7':
-        case '8':
-            addCar();
-            break;
-        case '9':
-            finalizePurchase();
-            break;
-        default:
-            alert(error);
-            break;
-    }
-}
-
-
-do {
-
-   option = prompt(listProducts());
-    selectProducts(option);
-
-}while (option !== '9');*/
-
-
-
 const displayProducts = async () => {
     const container = document.getElementById('productContainer');
     loading.style.display = 'flex';
     await sleep(1500);
 
+    // Cargar los productos
     fetch('../data/products.json')
         .then(response => response.json())
         .then(products => {
+            productsData = products; // Guardar los productos cargados
             loading.style.display = 'none';
-            container.innerHTML = '';
-
-            //Idea de filtro
-            //const filteredProducts = products.filter(product => 
-            //    product.name.toLowerCase().includes("protector solar")
-            //);
-
-            products.forEach((product) => {
-                const cardHTML = `
-                    <div class="product-card">
-                        <img src="${product.image}" alt="${product.name}">
-                        <h3>${product.name}</h3>
-                        <p>$ ${product.price}</p>
-                        <button class="btn" id="${product.id}">Agregar al carrito</button>
-                    </div>
-                `;
-                container.innerHTML += cardHTML;
-            });
-
-            const buttons = document.querySelectorAll('.btn');
-            buttons.forEach(button => {
-                button.addEventListener('click', (event) => {
-                    const productId = event.target.getAttribute('id');
-                    addCar(productId);
-                });
-            });
+            renderProducts(productsData); // Mostrar todos los productos inicialmente
         })
         .catch(error => {
             loading.style.display = 'none';
             console.error('Error al cargar los productos:', error);
             container.innerHTML = 'Error al cargar los productos';
         });
-}
+
+    // Función para renderizar los productos
+    const renderProducts = (products) => {
+        container.innerHTML = '';  // Limpiar el contenedor
+        products.forEach((product) => {
+            const cardHTML = `
+                <div class="product-card">
+                    <img src="${product.image}" alt="${product.name}">
+                    <h3>${product.name}</h3>
+                    <p>$ ${product.price}</p>
+                    <button class="btn" id="${product.id}">Agregar al carrito</button>
+                </div>
+            `;
+            container.innerHTML += cardHTML;
+        });
+
+    const buttons = document.querySelectorAll('.btn');
+        buttons.forEach(button => {
+            button.addEventListener('click', (event) => {
+                const productId = event.target.getAttribute('id');
+                addCar(productId); // Llamar a la función para agregar al carrito
+            });
+        });
+    };
+
+    // Filtrar productos en tiempo real
+    searchInput.addEventListener('input', (event) => {
+        const searchTerm = event.target.value.toLowerCase();
+        const filteredProducts = productsData.filter(product => 
+            product.name.toLowerCase().includes(searchTerm)
+        );
+        renderProducts(filteredProducts); // Renderizar los productos filtrados
+    });
+};
 
 displayProducts();
-
-
-/*const displayProducts = () => {
-    const container = document.getElementById('productContainer');
-    products.forEach((product) => {
-
-        const card = document.createElement('div');
-            card.classList.add('product-card');
-
-        const productImage = document.createElement('img');
-            productImage.src = product.image;
-            productImage.alt = product.name;  
-            card.appendChild(productImage);
-
-        const productName = document.createElement('h3');
-            productName.textContent = product.name;
-            card.appendChild(productName);
-
-        const productPrice = document.createElement('p');
-            productPrice.textContent = `$ ${product.price}`;
-            card.appendChild(productPrice);
-
-        const addButton = document.createElement('button');
-            addButton.textContent = 'Agregar al carrito';
-            addButton.classList.add('btn');
-            addButton.setAttribute('id', product.id);
-            addButton.addEventListener('click', () => {
-                const productId = event.target.getAttribute('id');
-                addCar(productId);
-            });
-        card.appendChild(addButton);
-        container.appendChild(card);
-    });
-}
-displayProducts(); */
 
 const carAmount = () => {
     cartCount.textContent = car.reduce((e, item) => e + item.amount, 0);
@@ -239,47 +106,7 @@ const loadCartFromLocalStorage = () => {
     }
 };
 
-/*Carrito sin LocalStorage*/
 
-/*
-const addCar = (productId) => {
-    let index = productId - 1;
-    let product = products[index];
-    let thisCart = car.find((e) => e.id == product.id);
-
-    if(thisCart) {
-        thisCart.amount += 1;
-        thisCart.price += product.price;
-    }else{
-        car.push({ id: products[index].id, name: products[index].name, price: products[index].price, image: products[index].image, amount: 1});
-    }
-    total += products[index].price;
-    carAmount();
-}
-*/
-const addCar = (productId) => {
-    fetch('../data/products.json')
-    .then(response => response.json())
-    .then(products => {
-        let index = productId - 1;
-        let product = products[index];
-        let thisCart = car.find((e) => e.id == product.id);
-
-        if(thisCart) {
-            thisCart.amount += 1;
-            thisCart.price += product.price;
-        } else {
-            car.push({ id: products[index].id, name: products[index].name, price: products[index].price, image: products[index].image, amount: 1 });
-        }
-        total += products[index].price;
-        showAddItemToast(products[index].name)
-        carAmount();
-        saveCartToLocalStorage();
-        renderCartItems();
-        
-    })
-    .catch(error => console.error('Error al cargar los productos', error));      
-};
 
 cartIcon.addEventListener('click', () => {
     cartModal.style.display = 'block';
@@ -386,11 +213,6 @@ checkoutBtn.addEventListener('click', () => {
     cancelBtn.addEventListener('click', () => {
         modalFin.style.display = 'none';
     });
-
-    //const closeBtn2 = document.querySelector('.close2');
-    //closeBtn2.addEventListener('click', () => {
-    //    modalFin.style.display = 'none';
-    //});
 });
 
 

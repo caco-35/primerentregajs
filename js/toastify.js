@@ -25,3 +25,27 @@ const showDeleteItemToast = (itemName) => {
         }
     }).showToast();
 }
+
+const addCar = (productId) => {
+    fetch('../data/products.json')
+    .then(response => response.json())
+    .then(products => {
+        let index = productId - 1;
+        let product = products[index];
+        let thisCart = car.find((e) => e.id == product.id);
+
+        if(thisCart) {
+            thisCart.amount += 1;
+            thisCart.price += product.price;
+        } else {
+            car.push({ id: products[index].id, name: products[index].name, price: products[index].price, image: products[index].image, amount: 1 });
+        }
+        total += products[index].price;
+        showAddItemToast(products[index].name)
+        carAmount();
+        saveCartToLocalStorage();
+        renderCartItems();
+        
+    })
+    .catch(error => console.error('Error al cargar los productos', error));      
+};

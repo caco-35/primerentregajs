@@ -16,13 +16,17 @@
 <body>
     <header>
         <h1>Tienda Online</h1>
+        <div class="input-field">
+            <input type="text" id="searchInput" required spellcheck="false">
+            <label>Buscar producto</label>
+            <span>🔍</span>
+        </div>
         <div class="cart-icon" id="cartIcon">
             🛒
             <span id="cartCount">0</span>
         </div>
     </header>
     <main>
-        <h2>Productos:</h2>
         <div class="product-container" id="productContainer"></div>
         <div class="spinner" id="loading"></div>        
         <div id="cartModal" class="modal">

@@ -50,5 +50,23 @@
         "name": "Protector solar",
         "price": 400,
         "image": "../img/protectorsolar.jpg"
+    },
+    {
+        "id": 9,
+        "name": "Chancletas playa",
+        "price": 399,
+        "image": "../img/chanclas.jpg"
+    },
+    {
+        "id": 10,
+        "name": "ChancletasX",
+        "price": 599,
+        "image": "../img/chanclascross.jpg"
+    },
+    {
+        "id": 11,
+        "name": "Chancletas Niño",
+        "price": 300,
+        "image": "../img/chanclasninos.webp"
     }  
 ]
