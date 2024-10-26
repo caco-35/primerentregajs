@@ -342,14 +342,14 @@ const removeItem = (index) => {
         car[index].amount -= 1;
         car[index].price -= products[itemPrice - 1].price;
         total -= products[itemPrice - 1].price;
+        showDeleteItemToast(car[index].name); 
         saveCartToLocalStorage();
         if (car[index].amount === 0) {
             car.splice(index, 1); 
             saveCartToLocalStorage();
         }
         renderCartItems();
-        carAmount();
-        showDeleteItemToast(car[index].name);    
+        carAmount();   
     })
     .catch(error => console.error('Error al eliminar producto', error));   
 };
