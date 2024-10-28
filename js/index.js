@@ -78,10 +78,6 @@ const displayProducts = async () => {
     });
 };
 
-const carAmount = () => {
-    cartCount.textContent = car.reduce((e, item) => e + item.amount, 0);
-}
-
 const loadCartFromLocalStorage = () => {
     const storedCart = localStorage.getItem('cart');
     const storedTotal = localStorage.getItem('total');
@@ -95,19 +91,11 @@ const loadCartFromLocalStorage = () => {
     }
 };
 
-cartIcon.addEventListener('click', () => {
-    cartModal.style.display = 'block';
-    renderCartItems(); 
-});
 
+const carAmount = () => {
+    cartCount.textContent = car.reduce((e, item) => e + item.amount, 0);
+}
 
-closeModal.addEventListener('click', () => {
-    cartModal.style.display = 'none';
-});
-
-closeModal2.addEventListener('click', () => {
-    modalFin.style.display = 'none';
-});
 
 const renderCartItems = () => {
     cartItemsContainer.innerHTML = '';
@@ -130,6 +118,7 @@ const renderCartItems = () => {
     carAmount();
     cartTotal.textContent = `Total: $ ${total.toFixed(2)}`;
 };
+
 loadCartFromLocalStorage();
 
 
@@ -164,17 +153,6 @@ checkoutBtn.addEventListener('click', () => {
     cancelBtn.addEventListener('click', () => {
         modalFin.style.display = 'none';
     });
-});
-
-
-continueShoppingBtn.addEventListener('click', () => {
-    cartModal.style.display = 'none';
-});
-
-window.addEventListener('click', (event) => {
-    if (event.target == cartModal) {
-        cartModal.style.display = 'none';
-    }
 });
 
 displayProducts();

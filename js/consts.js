@@ -26,6 +26,7 @@ const showDeleteItemToast = (itemName) => {
     }).showToast();
 };
 
+
 const addCar = (productId) => {
     fetch('../data/products.json')
     .then(response => response.json())
@@ -91,4 +92,26 @@ const saveCartToLocalStorage = () => {
     localStorage.setItem('total', total.toFixed(2));
 };
 
+cartIcon.addEventListener('click', () => {
+    cartModal.style.display = 'block';
+    renderCartItems(); 
+});
 
+
+closeModal.addEventListener('click', () => {
+    cartModal.style.display = 'none';
+});
+
+closeModal2.addEventListener('click', () => {
+    modalFin.style.display = 'none';
+});
+
+continueShoppingBtn.addEventListener('click', () => {
+    cartModal.style.display = 'none';
+});
+
+window.addEventListener('click', (event) => {
+    if (event.target == cartModal) {
+        cartModal.style.display = 'none';
+    }
+});
