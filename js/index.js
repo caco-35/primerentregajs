@@ -9,12 +9,10 @@ const continueShoppingBtn = document.getElementById('continueShoppingBtn');
 const cartTotal = document.getElementById('cartTotal');
 const searchInput = document.getElementById('searchInput');
 const modalContent = document.querySelector('.modal-content2');
-
 const sleep = (ms) => new Promise(resolve => setTimeout(resolve, ms));
 
 
 let total = 0;
-let option;
 let car = [];
 let productsData = [];  // Variable para almacenar los productos
 
@@ -80,18 +78,9 @@ const displayProducts = async () => {
     });
 };
 
-displayProducts();
-
 const carAmount = () => {
     cartCount.textContent = car.reduce((e, item) => e + item.amount, 0);
 }
-
-/*Carrito con LocalStorage*/
-
-const saveCartToLocalStorage = () => {
-    localStorage.setItem('cart', JSON.stringify(car));
-    localStorage.setItem('total', total.toFixed(2));
-};
 
 const loadCartFromLocalStorage = () => {
     const storedCart = localStorage.getItem('cart');
@@ -105,8 +94,6 @@ const loadCartFromLocalStorage = () => {
         cartTotal.textContent = `Total: $ ${total.toFixed(2)}`;
     }
 };
-
-
 
 cartIcon.addEventListener('click', () => {
     cartModal.style.display = 'block';
@@ -144,42 +131,6 @@ const renderCartItems = () => {
     cartTotal.textContent = `Total: $ ${total.toFixed(2)}`;
 };
 loadCartFromLocalStorage();
-
-const addItem = (index) => {
-    fetch('../data/products.json')
-    .then(response => response.json())
-    .then(products => {
-        itemPrice = car[index].id;
-        car[index].amount += 1;
-        car[index].price += products[itemPrice - 1].price;
-        total += products[itemPrice - 1].price;
-        saveCartToLocalStorage();
-        renderCartItems();
-        carAmount();
-        showAddItemToast(car[index].name);
-    })
-    .catch(error => console.error('Error al agregar producto', error));
-}
-
-const removeItem = (index) => {
-    fetch('../data/products.json')
-    .then(response => response.json())
-    .then(products => {
-        itemPrice = car[index].id;  
-        car[index].amount -= 1;
-        car[index].price -= products[itemPrice - 1].price;
-        total -= products[itemPrice - 1].price;
-        showDeleteItemToast(car[index].name); 
-        saveCartToLocalStorage();
-        if (car[index].amount === 0) {
-            car.splice(index, 1); 
-            saveCartToLocalStorage();
-        }
-        renderCartItems();
-        carAmount();   
-    })
-    .catch(error => console.error('Error al eliminar producto', error));   
-};
 
 
 checkoutBtn.addEventListener('click', () => {  
@@ -225,3 +176,5 @@ window.addEventListener('click', (event) => {
         cartModal.style.display = 'none';
     }
 });
+
+displayProducts();

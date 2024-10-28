@@ -10,7 +10,7 @@ const showAddItemToast = (itemName) => {
             borderRadius: "15px",
         }
     }).showToast();
-}
+};
 
 const showDeleteItemToast = (itemName) => {
     Toastify({
@@ -24,7 +24,7 @@ const showDeleteItemToast = (itemName) => {
             borderRadius: "15px",
         }
     }).showToast();
-}
+};
 
 const addCar = (productId) => {
     fetch('../data/products.json')
@@ -49,3 +49,46 @@ const addCar = (productId) => {
     })
     .catch(error => console.error('Error al cargar los productos', error));      
 };
+
+const removeItem = (index) => {
+    fetch('../data/products.json')
+    .then(response => response.json())
+    .then(products => {
+        itemPrice = car[index].id;  
+        car[index].amount -= 1;
+        car[index].price -= products[itemPrice - 1].price;
+        total -= products[itemPrice - 1].price;
+        showDeleteItemToast(car[index].name); 
+        saveCartToLocalStorage();
+        if (car[index].amount === 0) {
+            car.splice(index, 1); 
+            saveCartToLocalStorage();
+        }
+        renderCartItems();
+        carAmount();   
+    })
+    .catch(error => console.error('Error al eliminar producto', error));   
+};
+
+const addItem = (index) => {
+    fetch('../data/products.json')
+    .then(response => response.json())
+    .then(products => {
+        itemPrice = car[index].id;
+        car[index].amount += 1;
+        car[index].price += products[itemPrice - 1].price;
+        total += products[itemPrice - 1].price;
+        saveCartToLocalStorage();
+        renderCartItems();
+        carAmount();
+        showAddItemToast(car[index].name);
+    })
+    .catch(error => console.error('Error al agregar producto', error));
+};
+
+const saveCartToLocalStorage = () => {
+    localStorage.setItem('cart', JSON.stringify(car));
+    localStorage.setItem('total', total.toFixed(2));
+};
+
+
