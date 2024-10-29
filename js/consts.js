@@ -26,6 +26,28 @@ const showDeleteItemToast = (itemName) => {
     }).showToast();
 };
 
+const finalizePurchase = () => {
+
+    const nameSend = document.getElementById('name').value;
+    const lastnameSend = document.getElementById('lastname').value;
+    const directionSend = document.getElementById('direction').value;
+
+    car = [];
+    total = 0;
+    carAmount();
+    saveCartToLocalStorage();
+    modalContent.innerHTML = `
+        <p>Gracias por su compra ${nameSend} ${lastnameSend}</p></br></br></br>
+        <p>El producto sera enviado a:</p>
+        <p>${directionSend}</p>
+        <button id="closeBtn" class="btn-bye">Aceptar</button>
+        `;
+    const closeBtn = document.getElementById('closeBtn');
+        closeBtn.addEventListener('click', () => {
+        modalFin.style.display = 'none';
+        cartModal.style.display = 'none';
+     });
+}
 
 const addCar = (productId) => {
     fetch('../data/products.json')

@@ -53,7 +53,7 @@ const displayProducts = async () => {
                     <img src="${product.image}" alt="${product.name}">
                     <h3>${product.name}</h3>
                     <p>$ ${product.price}</p>
-                    <button class="addbtn" id="${product.id}">Agregar al carrito</button>
+                    <button class="btn" id="${product.id}">Agregar al carrito</button>
                 </div>
             `;
             container.innerHTML += cardHTML;
@@ -124,28 +124,30 @@ loadCartFromLocalStorage();
 checkoutBtn.addEventListener('click', () => {  
     modalContent.innerHTML = `      
         <p>Para finalizar su compra, complete los datos:</p>
+        <p><label for="name">Nombre:</label> <input type="text" id="name" required placeholder="Nombre/s"></p>
+        <p><label for="lastname">Apellido:</label> <input type="text" id="lastname" required placeholder="Apellido/s"></p>
+        <p><label for="email">Email:</label> <input type="email" id="email" required placeholder="Correo@correo.com"></p>
+        <p><label for="direction">Dirección:</label> <input type="text" id="direction" required placeholder="Direccion"></p>
+        <p><label for="checkboxConfirm">Check para confirmar:</label> <input type="checkbox" id="checkboxConfirm" ></p>
         <div class="cart-buttons">
             <button class="btn-finalize" id="aceptBtn">Aceptar</button>
             <button class="btn-continue" id="cancelBtn">Cancelar</button>
         </div>
     `;
     modalFin.style.display = 'block';
+    const checkboxConfirm = document.getElementById('checkboxConfirm');
     const aceptBtn = document.getElementById('aceptBtn');
     const cancelBtn = document.getElementById('cancelBtn');
 
     aceptBtn.addEventListener('click', () => {
-        car = [];
-        total = 0;
-        carAmount();
-        saveCartToLocalStorage();
-        modalContent.innerHTML = `
-            <p>Gracias por su compra</p>
-            <button id="closeBtn" class="btn-bye">Aceptar</button>
+        checkboxConfirm.checked ? finalizePurchase() : modalContent.innerHTML = `
+        <p>No has confirmado el check</p>
+        <button id="closeBtn" class="btn-finalize">Aceptar</button>
         `;
+
         const closeBtn = document.getElementById('closeBtn');
             closeBtn.addEventListener('click', () => {
                 modalFin.style.display = 'none';
-                cartModal.style.display = 'none';
             });
         });
 

@@ -139,7 +139,7 @@ input:valid ~ label{
     color: #333;
 }
 
-.addbtn {
+.btn {
     background-color: #00666D;
     color: white;
     padding: 10px;
@@ -148,7 +148,7 @@ input:valid ~ label{
     cursor: pointer;
 }
 
-.addbtn:hover {
+.btn:hover {
     background-color: #4a959b;
 }
 .product-card img {
@@ -171,15 +171,40 @@ input:valid ~ label{
 }
 
 .modal-content2 {
-    display: grid;
-    justify-content: center;
-    background-color: white;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    background-color: rgb(255, 255, 255);
     margin: 15% auto;
     padding: 20px;
     border-radius: 10px;
     width: 40%;
     position: relative;
 }
+
+.modal-content2 p {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    margin: 5px 0;
+}
+
+.modal-content2 p label {
+    width: 100px; /* Ajusta el ancho según tus necesidades */
+}
+
+.modal-content2 input[type="text"],
+.modal-content2 input[type="email"] {
+    flex: 1;
+    padding: 5px;
+    font-size: 14px;
+}
+
+/* Checkbox */
+.modal-content2 input[type="checkbox"] {
+    margin-left: 10px;
+}
+
 
 .close2 {
     position: absolute;
@@ -244,7 +269,8 @@ input:valid ~ label{
 .cart-buttons {
     margin-top: 20px;
     display: flex;
-    justify-content: space-between;
+    width: 100%;
+    justify-content: space-around;
 }
 .btn-add {
     padding: 10px 20px;
@@ -321,12 +347,3 @@ input:valid ~ label{
 
 /*Inputs*/
 
-
-.car-form {
-    width: calc(100% - 20px);
-    padding: 10px;
-    margin-bottom: 15px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-
-}
