@@ -53,7 +53,7 @@ const displayProducts = async () => {
                     <img src="${product.image}" alt="${product.name}">
                     <h3>${product.name}</h3>
                     <p>$ ${product.price}</p>
-                    <button class="btn" id="${product.id}">Agregar al carrito</button>
+                    <button class="addbtn" id="${product.id}">Agregar al carrito</button>
                 </div>
             `;
             container.innerHTML += cardHTML;
@@ -63,18 +63,17 @@ const displayProducts = async () => {
         buttons.forEach(button => {
             button.addEventListener('click', (event) => {
                 const productId = event.target.getAttribute('id');
-                addCar(productId); // Llamar a la función para agregar al carrito
+                addCar(productId);
             });
         });
     };
 
-    // Filtrar productos en tiempo real
     searchInput.addEventListener('input', (event) => {
         const searchTerm = event.target.value.toLowerCase();
         const filteredProducts = productsData.filter(product => 
             product.name.toLowerCase().includes(searchTerm)
         );
-        renderProducts(filteredProducts); // Renderizar los productos filtrados
+        renderProducts(filteredProducts); 
     });
 };
 
@@ -124,7 +123,7 @@ loadCartFromLocalStorage();
 
 checkoutBtn.addEventListener('click', () => {  
     modalContent.innerHTML = `      
-        <p>¿Desea finalizar su compra?</p>
+        <p>Para finalizar su compra, complete los datos:</p>
         <div class="cart-buttons">
             <button class="btn-finalize" id="aceptBtn">Aceptar</button>
             <button class="btn-continue" id="cancelBtn">Cancelar</button>

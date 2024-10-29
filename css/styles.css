@@ -139,7 +139,7 @@ input:valid ~ label{
     color: #333;
 }
 
-.btn {
+.addbtn {
     background-color: #00666D;
     color: white;
     padding: 10px;
@@ -148,7 +148,7 @@ input:valid ~ label{
     cursor: pointer;
 }
 
-.btn:hover {
+.addbtn:hover {
     background-color: #4a959b;
 }
 .product-card img {
@@ -318,3 +318,15 @@ input:valid ~ label{
     font-weight: bold;
 }
 
+
+/*Inputs*/
+
+
+.car-form {
+    width: calc(100% - 20px);
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+
+}
