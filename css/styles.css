@@ -170,7 +170,7 @@ input:valid ~ label{
     background-color: rgba(0, 0, 0, 0.5);
 }
 
-.modal-content2, .modal-contentAlert {
+.modal-content2 {
     display: flex;
     flex-direction: column;
     gap: 10px;
@@ -179,6 +179,19 @@ input:valid ~ label{
     padding: 20px;
     border-radius: 10px;
     width: 40%;
+    position: relative;
+}
+
+.modal-contentAlert {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    background-color: rgb(255, 255, 255);
+    margin: 18% auto;
+    padding: 30px;
+    border-radius: 10px;
+    width: 25%;
     position: relative;
 }
 
