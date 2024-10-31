@@ -1,54 +1,3 @@
-const showAddItemToast = (itemName) => {
-    Toastify({
-        text: `Nuevo producto agregado: ${itemName}`,
-        duration: 2000,
-        gravity: "top",
-        position: "center",
-        style: {
-            background: "linear-gradient(90deg, rgba(69,161,11,1) 0%, rgba(115,205,58,1) 70%)",
-            color: "white",
-            borderRadius: "15px",
-        }
-    }).showToast();
-};
-
-const showDeleteItemToast = (itemName) => {
-    Toastify({
-        text: `Producto eliminado: ${itemName}`,
-        duration: 2000,
-        gravity: "top",
-        position: "center",
-        style: {
-            background: "linear-gradient(90deg, rgba(161,11,27,1) 0%, rgba(213,78,121,1) 70%)",
-            color: "white",
-            borderRadius: "15px",
-        }
-    }).showToast();
-};
-
-const finalizePurchase = () => {
-
-    const nameSend = document.getElementById('name').value;
-    const lastnameSend = document.getElementById('lastname').value;
-    const directionSend = document.getElementById('direction').value;
-
-    car = [];
-    total = 0;
-    carAmount();
-    saveCartToLocalStorage();
-    modalContent.innerHTML = `
-        <p>Gracias por su compra ${nameSend} ${lastnameSend}</p></br></br></br>
-        <p>El producto sera enviado a:</p>
-        <p>${directionSend}</p>
-        <button id="closeBtn" class="btn-bye">Aceptar</button>
-        `;
-    const closeBtn = document.getElementById('closeBtn');
-        closeBtn.addEventListener('click', () => {
-        modalFin.style.display = 'none';
-        cartModal.style.display = 'none';
-     });
-}
-
 const addCar = (productId) => {
     fetch('../data/products.json')
     .then(response => response.json())
@@ -107,6 +56,70 @@ const addItem = (index) => {
         showAddItemToast(car[index].name);
     })
     .catch(error => console.error('Error al agregar producto', error));
+};
+
+const finalizePurchase = () => {
+
+    const nameSend = document.getElementById('name').value;
+    const lastnameSend = document.getElementById('lastname').value;
+    const directionSend = document.getElementById('direction').value;
+
+    car = [];
+    total = 0;
+    carAmount();
+    saveCartToLocalStorage();
+    modalContent.innerHTML = `
+        <p>Gracias por su compra ${nameSend} ${lastnameSend}</p></br></br></br>
+        <p>El producto sera enviado a:</p>
+        <p>${directionSend}</p>
+        <button id="closeBtn" class="btn-bye">Aceptar</button>
+        `;
+    const closeBtn = document.getElementById('closeBtn');
+        closeBtn.addEventListener('click', () => {
+        modalFin.style.display = 'none';
+        cartModal.style.display = 'none';
+     });
+}
+
+const alertCheck = () => {
+    modalWarning.style.display = 'block';
+    modalAlert.innerHTML = `
+        <p class="p-check">¡No has confirmado el check!</p></br>
+        <button id="closeBtn" class="btn-finalize">Aceptar</button>
+        `;
+
+        const closeBtn = document.getElementById('closeBtn');
+            closeBtn.addEventListener('click', () => {
+                modalWarning.style.display = 'none';
+            });
+}
+
+const showAddItemToast = (itemName) => {
+    Toastify({
+        text: `Nuevo producto agregado: ${itemName}`,
+        duration: 2000,
+        gravity: "top",
+        position: "center",
+        style: {
+            background: "linear-gradient(90deg, rgba(69,161,11,1) 0%, rgba(115,205,58,1) 70%)",
+            color: "white",
+            borderRadius: "15px",
+        }
+    }).showToast();
+};
+
+const showDeleteItemToast = (itemName) => {
+    Toastify({
+        text: `Producto eliminado: ${itemName}`,
+        duration: 2000,
+        gravity: "top",
+        position: "center",
+        style: {
+            background: "linear-gradient(90deg, rgba(161,11,27,1) 0%, rgba(213,78,121,1) 70%)",
+            color: "white",
+            borderRadius: "15px",
+        }
+    }).showToast();
 };
 
 const saveCartToLocalStorage = () => {

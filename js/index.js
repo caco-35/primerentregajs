@@ -9,8 +9,8 @@ const continueShoppingBtn = document.getElementById('continueShoppingBtn');
 const cartTotal = document.getElementById('cartTotal');
 const searchInput = document.getElementById('searchInput');
 const modalContent = document.querySelector('.modal-content2');
+const modalAlert = document.querySelector('.modal-contentAlert');
 const sleep = (ms) => new Promise(resolve => setTimeout(resolve, ms));
-
 
 let total = 0;
 let car = [];
@@ -30,23 +30,20 @@ const displayProducts = async () => {
     loading.style.display = 'flex';
     await sleep(1500);
 
-    // Cargar los productos
     fetch('../data/products.json')
         .then(response => response.json())
         .then(products => {
-            productsData = products; // Guardar los productos cargados
+            productsData = products;
             loading.style.display = 'none';
-            renderProducts(productsData); // Mostrar todos los productos inicialmente
+            renderProducts(productsData);
         })
         .catch(error => {
             loading.style.display = 'none';
-            console.error('Error al cargar los productos:', error);
             container.innerHTML = 'Error al cargar los productos';
         });
 
-    // Función para renderizar los productos
     const renderProducts = (products) => {
-        container.innerHTML = '';  // Limpiar el contenedor
+        container.innerHTML = '';
         products.forEach((product) => {
             const cardHTML = `
                 <div class="product-card">
@@ -120,14 +117,13 @@ const renderCartItems = () => {
 
 loadCartFromLocalStorage();
 
-
 checkoutBtn.addEventListener('click', () => {  
-    modalContent.innerHTML = `      
+    modalContent.innerHTML = ` 
         <p>Para finalizar su compra, complete los datos:</p>
-        <p><label for="name">Nombre:</label> <input type="text" id="name" required placeholder="Nombre/s"></p>
-        <p><label for="lastname">Apellido:</label> <input type="text" id="lastname" required placeholder="Apellido/s"></p>
-        <p><label for="email">Email:</label> <input type="email" id="email" required placeholder="Correo@correo.com"></p>
-        <p><label for="direction">Dirección:</label> <input type="text" id="direction" required placeholder="Direccion"></p>
+        <p><label for="name">Nombre:</label> <input type="text" id="name" placeholder="Nombre/s" required></p>
+        <p><label for="lastname">Apellido:</label> <input type="text" id="lastname"  placeholder="Apellido/s" required></p>
+        <p><label for="email">Email:</label> <input type="email" id="email"  placeholder="Correo@correo.com" required></p>
+        <p><label for="direction">Dirección:</label> <input type="text" id="direction"  placeholder="Direccion" required></p>
         <p><label for="checkboxConfirm">Check para confirmar:</label> <input type="checkbox" id="checkboxConfirm" ></p>
         <div class="cart-buttons">
             <button class="btn-finalize" id="aceptBtn">Aceptar</button>
@@ -140,15 +136,7 @@ checkoutBtn.addEventListener('click', () => {
     const cancelBtn = document.getElementById('cancelBtn');
 
     aceptBtn.addEventListener('click', () => {
-        checkboxConfirm.checked ? finalizePurchase() : modalContent.innerHTML = `
-        <p>No has confirmado el check</p>
-        <button id="closeBtn" class="btn-finalize">Aceptar</button>
-        `;
-
-        const closeBtn = document.getElementById('closeBtn');
-            closeBtn.addEventListener('click', () => {
-                modalFin.style.display = 'none';
-            });
+        checkboxConfirm.checked ? finalizePurchase() : alertCheck()
         });
 
     cancelBtn.addEventListener('click', () => {

@@ -159,7 +159,7 @@ input:valid ~ label{
     margin-bottom: 10px;
 }
 
-.modalFinalize {
+.modalFinalize, .modalAlert {
     display: none;
     position: fixed;
     z-index: 2;
@@ -170,7 +170,7 @@ input:valid ~ label{
     background-color: rgba(0, 0, 0, 0.5);
 }
 
-.modal-content2 {
+.modal-content2, .modal-contentAlert {
     display: flex;
     flex-direction: column;
     gap: 10px;
@@ -187,6 +187,10 @@ input:valid ~ label{
     align-items: center;
     justify-content: flex-start;
     margin: 5px 0;
+}
+
+.modal-content2 .p-check {
+    color: red;
 }
 
 .modal-content2 p label {

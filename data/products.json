@@ -3,70 +3,118 @@
         "id": 1,
         "name": "Remera",
         "price": 550,
-        "image": "../img/RemeraBasica.jpg",
+        "image": "../assets/img/RemeraBasica.jpg",
         "category": "ropa"
     },
     {
         "id": 2,
         "name": "Short",
         "price": 600,
-        "image": "../img/short.jpg"
+        "image": "../assets/img/short.jpg"
     },
     {
         "id": 3,
         "name": "Vaquero",
         "price": 1100,
-        "image": "../img/pantalon-vaquero.jpg"
+        "image": "../assets/img/pantalon-vaquero.jpg"
 
     },
     {
         "id": 4,
         "name": "Camisa",
         "price": 650,
-        "image": "../img/camisa.jpg"
+        "image": "../assets/img/camisa.jpg"
     },
     {
         "id": 5,
         "name": "Musculosa",
         "price": 450,
-        "image": "../img/musculosa.jpg"
+        "image": "../assets/img/musculosa.jpg"
 
     },
     {
         "id": 6,
         "name": "Maya",
         "price": 550,
-        "image": "../img/maya.jpg"
+        "image": "../assets/img/maya.jpg"
     },
     {
         "id": 7,
         "name": "Gorra",
         "price": 200,
-        "image": "../img/gorro.jpg"
+        "image": "../assets/img/gorro.jpg"
 
     },
     {
         "id": 8,
         "name": "Protector solar",
         "price": 400,
-        "image": "../img/protectorsolar.jpg"
+        "image": "../assets/img/protectorsolar.jpg"
     },
     {
         "id": 9,
         "name": "Chancletas playa",
         "price": 399,
-        "image": "../img/chanclas.jpg"
+        "image": "../assets/img/chanclas.jpg"
     },
     {
         "id": 10,
         "name": "ChancletasX",
         "price": 599,
-        "image": "../img/chanclascross.jpg"
+        "image": "../assets/img/chanclascross.jpg"
     },
     {
         "id": 11,
         "name": "Chancletas Niño",
         "price": 300,
-        "image": "../img/chanclasninos.webp"
-    }  
+        "image": "../assets/img/chanclasninos.webp"
+    },
+    {
+        "id": 12,
+        "name": "Conjunto deportivo",
+        "price": 3250,
+        "image": "../assets/img/conjuntodepo.jpg"
+    },
+    {
+        "id": 13,
+        "name": "Muscolosa - Yankees",
+        "price": 800,
+        "image": "../assets/img/musculosaYankees.jpg"
+    },
+    {
+        "id": 14,
+        "name": "Muscolosa - Miami",
+        "price": 950,
+        "image": "../assets/img/musculosaMiami.jpg"
+    },
+    {
+        "id": 15,
+        "name": "Muscolosa - Miami (B)",
+        "price": 1000,
+        "image": "../assets/img/miamiblanca.jpg"
+    },
+    {
+        "id": 16,
+        "name": "Tabla de surft",
+        "price": 6500,
+        "image": "../assets/img/tablasurft.jpg"
+    },
+    {
+        "id": 17,
+        "name": "Tabla de surft (XL)",
+        "price": 6500,
+        "image": "../assets/img/tablasurftxl.jpeg"
+    },
+    {
+        "id": 18,
+        "name": "Bolso deportivo",
+        "price": 1200,
+        "image": "../assets/img/bolsodeportivo.jpg"
+    },
+    {
+        "id": 19,
+        "name": "Pantalon cargo",
+        "price": 975,
+        "image": "../assets/img/pantaloncargo.jpeg"
+    }    
 ]
