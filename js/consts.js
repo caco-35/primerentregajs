@@ -1,4 +1,4 @@
-const addCar = (productId) => {
+const addCar = (productId, amount) => {
     fetch('../data/products.json')
     .then(response => response.json())
     .then(products => {
@@ -6,20 +6,20 @@ const addCar = (productId) => {
         let product = products[index];
         let thisCart = car.find((e) => e.id == product.id);
 
-        if(thisCart) {
-            thisCart.amount += 1;
-            thisCart.price += product.price;
+        if (thisCart) {
+            thisCart.amount += amount;
+            thisCart.price += product.price * amount;
         } else {
-            car.push({ id: products[index].id, name: products[index].name, price: products[index].price, image: products[index].image, amount: 1 });
+            car.push({ id: product.id, name: product.name, price: product.price * amount, image: product.image, amount });
         }
-        total += products[index].price;
-        showAddItemToast(products[index].name)
+
+        total += product.price * amount;
+        showAddItemToast(`${product.name} x${amount}`);
         carAmount();
         saveCartToLocalStorage();
         renderCartItems();
-        
     })
-    .catch(error => console.error('Error al cargar los productos', error));      
+    .catch(error => console.error('Error al cargar los productos', error));
 };
 
 const removeItem = (index) => {
@@ -122,6 +122,20 @@ const showDeleteItemToast = (itemName) => {
     }).showToast();
 };
 
+const showDeleteCarToast = () => {
+    Toastify({
+        text: `Se ha vaciado el carrito`,
+        duration: 2000,
+        gravity: "top",
+        position: "center",
+        style: {
+            background: "linear-gradient(90deg, rgba(161,11,27,1) 0%, rgba(213,78,121,1) 70%)",
+            color: "white",
+            borderRadius: "15px",
+        }
+    }).showToast();
+};
+
 const saveCartToLocalStorage = () => {
     localStorage.setItem('cart', JSON.stringify(car));
     localStorage.setItem('total', total.toFixed(2));
@@ -137,10 +151,6 @@ closeModal.addEventListener('click', () => {
     cartModal.style.display = 'none';
 });
 
-closeModal2.addEventListener('click', () => {
-    modalFin.style.display = 'none';
-});
-
 continueShoppingBtn.addEventListener('click', () => {
     cartModal.style.display = 'none';
 });
@@ -150,3 +160,29 @@ window.addEventListener('click', (event) => {
         cartModal.style.display = 'none';
     }
 });
+
+
+deleteIcon.addEventListener('click', () => {
+    modalWarning.style.display = 'block'
+    modalAlert.innerHTML = `
+        <p class="p-check">¿Desea eliminar el carrito?</p></br>
+        <button id="aceptBtn" class="btn-bye">Aceptar</button>
+        <button id="closeBtn" class="btn-finalize">Cancelar</button>
+        `;
+
+        const aceptBtn = document.getElementById('aceptBtn');
+            aceptBtn.addEventListener('click', () => {
+                car = [];
+                total = 0;
+                carAmount();
+                saveCartToLocalStorage();
+                renderCartItems();
+                showDeleteCarToast();
+                modalWarning.style.display = 'none';    
+            })
+
+        const closeBtn = document.getElementById('closeBtn');
+            closeBtn.addEventListener('click', () => {
+                modalWarning.style.display = 'none';
+            });
+})

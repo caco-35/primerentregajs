@@ -1,7 +1,7 @@
 const cartIcon = document.getElementById('cartIcon');
+const deleteIcon = document.getElementById('deleteIcon');
 const cartModal = document.getElementById('cartModal');
 const closeModal = document.querySelector('.close');
-const closeModal2 = document.querySelector('.close2');
 const cartItemsContainer = document.getElementById('cartItems');
 const cartCount = document.getElementById('cartCount');
 const checkoutBtn = document.getElementById('checkoutBtn');
@@ -50,17 +50,20 @@ const displayProducts = async () => {
                     <img src="${product.image}" alt="${product.name}">
                     <h3>${product.name}</h3>
                     <p>$ ${product.price}</p>
+                    <span>Cantidad: <input type="number" id="amount-${product.id}" min="1" value="1" class="input-amount"></span>
                     <button class="btn" id="${product.id}">Agregar al carrito</button>
                 </div>
             `;
             container.innerHTML += cardHTML;
         });
 
-    const buttons = document.querySelectorAll('.btn');
-        buttons.forEach(button => {
-            button.addEventListener('click', (event) => {
-                const productId = event.target.getAttribute('id');
-                addCar(productId);
+     document.querySelectorAll(".btn").forEach(button => {
+        button.addEventListener("click", (e) => {
+            const productId = e.target.id;
+            const amountInput = document.getElementById(`amount-${productId}`);
+            const amount = parseInt(amountInput.value) || 1;
+            addCar(productId, amount);
+            amountInput.value = 1;
             });
         });
     };

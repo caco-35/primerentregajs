@@ -139,6 +139,11 @@ input:valid ~ label{
     color: #333;
 }
 
+.input-amount {
+    margin: 10px;
+    width: 45px;
+}
+
 .btn {
     background-color: #00666D;
     color: white;
@@ -222,16 +227,6 @@ input:valid ~ label{
     margin-left: 10px;
 }
 
-
-.close2 {
-    position: absolute;
-    top: 10px;
-    right: 20px;
-    color: red;
-    font-size: 25px;
-    cursor: pointer;
-}
-
 .modal {
     display: none;
     position: fixed;
@@ -258,6 +253,14 @@ input:valid ~ label{
     right: 20px;
     color: red;
     font-size: 25px;
+    cursor: pointer;
+}
+
+.delete-car {
+    position: absolute;
+    bottom: 25px;
+    right: 20px;
+    font-size: 20px;
     cursor: pointer;
 }
 
@@ -360,7 +363,3 @@ input:valid ~ label{
     margin-bottom: 10px;
     font-weight: bold;
 }
-
-
-/*Inputs*/
-
