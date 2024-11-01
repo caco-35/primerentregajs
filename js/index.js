@@ -14,7 +14,7 @@ const sleep = (ms) => new Promise(resolve => setTimeout(resolve, ms));
 
 let total = 0;
 let car = [];
-let productsData = [];  // Variable para almacenar los productos
+let productsData = [];
 
 class Products {
     constructor(id, name, price, image){
@@ -50,7 +50,7 @@ const displayProducts = async () => {
                     <img src="${product.image}" alt="${product.name}">
                     <h3>${product.name}</h3>
                     <p>$ ${product.price}</p>
-                    <span>Cantidad: <input type="number" id="amount-${product.id}" min="1" value="1" class="input-amount"></span>
+                    <span>Cantidad: <input type="number" id="amount-${product.id}" min="1" value="1" class="input-amount" title="Ingresar la cantidad que desea comprar."></span>
                     <button class="btn" id="${product.id}">Agregar al carrito</button>
                 </div>
             `;
@@ -146,5 +146,6 @@ checkoutBtn.addEventListener('click', () => {
         modalFin.style.display = 'none';
     });
 });
+
 
 displayProducts();

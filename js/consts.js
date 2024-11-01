@@ -166,19 +166,19 @@ deleteIcon.addEventListener('click', () => {
     modalWarning.style.display = 'block'
     modalAlert.innerHTML = `
         <p class="p-check">¿Desea eliminar el carrito?</p></br>
-        <button id="aceptBtn" class="btn-bye">Aceptar</button>
+        <button id="deleteBtn" class="btn-bye">Aceptar</button>
         <button id="closeBtn" class="btn-finalize">Cancelar</button>
         `;
 
-        const aceptBtn = document.getElementById('aceptBtn');
-            aceptBtn.addEventListener('click', () => {
+        const deleteBtn = document.getElementById('deleteBtn');
+            deleteBtn.addEventListener('click', () => {
                 car = [];
                 total = 0;
                 carAmount();
                 saveCartToLocalStorage();
                 renderCartItems();
                 showDeleteCarToast();
-                modalWarning.style.display = 'none';    
+                modalWarning.style.display = 'none';
             })
 
         const closeBtn = document.getElementById('closeBtn');

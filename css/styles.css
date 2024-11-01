@@ -239,6 +239,9 @@ input:valid ~ label{
 }
 
 .modal-content {
+    max-height: 500px; /* Ajusta este valor según lo que necesites */
+    overflow-y: auto;  /* Habilita el scroll vertical */
+    padding: 10px;
     background-color: white;
     margin: 10% auto;
     padding: 20px;
@@ -258,8 +261,8 @@ input:valid ~ label{
 
 .delete-car {
     position: absolute;
-    bottom: 25px;
-    right: 20px;
+    top: 10px;
+    right: 40px;
     font-size: 20px;
     cursor: pointer;
 }

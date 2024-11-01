@@ -34,7 +34,7 @@
     },
     {
         "id": 6,
-        "name": "Maya",
+        "name": "Bikini",
         "price": 550,
         "image": "../assets/img/maya.jpg"
     },
@@ -102,7 +102,7 @@
     {
         "id": 17,
         "name": "Tabla de surft (XL)",
-        "price": 6500,
+        "price": 7500,
         "image": "../assets/img/tablasurftxl.jpeg"
     },
     {
