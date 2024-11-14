@@ -280,6 +280,10 @@ input:valid ~ label{
     border-bottom: 1px solid #ccc;
 }
 
+.cart-item:nth-child(odd) {
+    background-color: #f7f3f3;;
+}
+
 .item-price {
     text-align: end;
 }
